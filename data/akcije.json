@@ -1,3 +1,21 @@
 {
-  "akcije": []
+  "akcije": [
+    {
+      "izgled": "right",
+      "velicina_slike": "srednja",
+      "godina": "2026",
+      "naslov": "Test",
+      "opis": "kratak opis teksta",
+      "galerija": [
+        {
+          "slika": "/images/uploads/123.jpg"
+        },
+        {
+          "slika": "/images/uploads/familija.jpg"
+        }
+      ],
+      "tekst": "tesktaaaaaaaaaaaaaaaaakfnkankfnaf\nAfdawdawdwad\ndawdadwa\nadwdwadad\nawdawdawd\nadwwdawd",
+      "slika": "/images/uploads/1e.jpg"
+    }
+  ]
 }
