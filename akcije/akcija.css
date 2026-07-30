@@ -1,0 +1,61 @@
+:root{
+  --walnut:#2b2015;
+  --walnut-2:#1d150e;
+  --cream:#f1e6cd;
+  --cream-2:#e7d8b8;
+  --moss:#54603f;
+  --rust:#a3472e;
+  --amber:#c08a3e;
+  --river:#3d7d96;
+  --leaf:#6b8f3f;
+  --ink:#221913;
+  --font-display:'Fraunces', serif;
+  --font-body:'Work Sans', sans-serif;
+  --font-mono:'IBM Plex Mono', monospace;
+}
+*{box-sizing:border-box;}
+@media (prefers-reduced-motion: reduce){
+  *{animation-duration:0.001ms !important; transition-duration:0.001ms !important;}
+}
+html{scroll-behavior:smooth;}
+body{ margin:0; background:var(--cream); color:var(--ink); font-family:var(--font-body); line-height:1.6; }
+a{color:inherit;}
+::selection{background:var(--rust); color:var(--cream);}
+
+header.nav{ position:sticky; top:0; z-index:50; display:flex; align-items:center; justify-content:space-between; padding:16px 32px; background:rgba(241,230,205,0.92); backdrop-filter:blur(6px); border-bottom:1px solid rgba(43,32,21,0.12); }
+.nav-mark{ font-family:var(--font-display); font-weight:600; font-size:1.05rem; }
+.nav-mark span{ color:var(--rust); }
+.back-link{ font-family:var(--font-mono); font-size:0.85rem; text-decoration:none; border-bottom:1px solid var(--rust); color:var(--rust); padding-bottom:2px; }
+
+.akcija-hero{ background:var(--walnut); color:var(--cream); padding:64px 32px 48px; }
+.akcija-hero-inner{ max-width:1080px; margin:0 auto; }
+.akcija-hero .yr{ font-family:var(--font-mono); font-size:0.82rem; letter-spacing:0.12em; text-transform:uppercase; color:var(--amber); display:block; margin-bottom:14px; }
+.akcija-hero h1{ font-family:var(--font-display); font-weight:700; font-size:clamp(2.1rem, 5vw, 3.1rem); line-height:1.05; margin:0 0 16px; letter-spacing:-0.01em; max-width:20ch; }
+.akcija-hero .lede{ font-size:1.05rem; max-width:56ch; color:rgba(241,230,205,0.85); margin:0; }
+
+article.akcija-body{ max-width:1080px; margin:0 auto; padding:56px 32px 80px; }
+article.akcija-body p{ margin:0 0 18px; max-width:64ch; font-size:1rem; }
+.akcija-quote{ font-family:var(--font-display); font-style:italic; font-size:1.1rem; color:var(--rust); border-left:3px solid var(--rust); padding-left:18px; margin:28px 0; }
+
+.akcija-facts{ list-style:none; margin:24px 0; padding:0; display:grid; gap:10px; }
+.akcija-facts li{ font-size:0.94rem; padding-left:22px; position:relative; }
+.akcija-facts li::before{ content:"·"; position:absolute; left:0; top:-2px; color:var(--rust); font-size:1.6rem; line-height:1; }
+
+.akcija-people{ display:grid; grid-template-columns:repeat(auto-fit, minmax(180px,1fr)); gap:18px; margin:28px 0; }
+.person-card{ background:var(--cream-2); padding:20px; border-top:3px solid var(--pc, var(--rust)); }
+.person-card .role{ font-family:var(--font-mono); font-size:0.72rem; letter-spacing:0.08em; text-transform:uppercase; color:var(--pc, var(--rust)); }
+.person-card h4{ font-family:var(--font-display); font-size:1.05rem; margin:8px 0 6px; }
+.person-card p{ margin:0; font-size:0.88rem; color:rgba(34,25,19,0.8); max-width:none; }
+
+.support-note{ background:var(--cream-2); border-left:4px solid var(--moss); padding:16px 20px; margin:24px 0; font-size:0.92rem; }
+
+.akcija-sources{ margin-top:36px; padding-top:24px; border-top:1px solid rgba(43,32,21,0.18); }
+.akcija-sources h2{ font-family:var(--font-display); font-size:1.15rem; margin:0 0 14px; }
+.akcija-sources ul{ list-style:none; margin:0; padding:0; }
+.akcija-sources li{ margin-bottom:8px; }
+.akcija-sources a{ font-family:var(--font-mono); font-size:0.85rem; text-decoration:none; border-bottom:1px solid var(--amber); color:var(--ink); padding-bottom:1px; }
+
+.akcija-nav-between{ display:flex; justify-content:space-between; gap:16px; margin-top:44px; flex-wrap:wrap; }
+.akcija-nav-between a{ font-family:var(--font-mono); font-size:0.85rem; text-decoration:none; border-bottom:1px solid var(--rust); color:var(--rust); padding-bottom:2px; }
+
+footer{ text-align:center; padding:28px 32px; font-family:var(--font-mono); font-size:0.78rem; color:rgba(43,32,21,0.6); }
