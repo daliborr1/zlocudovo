@@ -15,6 +15,37 @@
       "izgled": "left",
       "tekst": "ovoer je test dawdawd\nAwdawdadad\ndawdwadawd\nwdwrfsfgsdv\nsfsgthfhygujkhikjhgfdserwterytuykihj\ntfhtfthfdth",
       "velicina_galerije": "srednja"
+    },
+    {
+      "godina": "2019",
+      "galerija": [
+        "/images/uploads/123.jpg",
+        "/images/uploads/screenshot-2026-06-23-224157.png"
+      ],
+      "slika": "/images/uploads/familija.jpg",
+      "opis": "primer",
+      "izgled_galerije": "end",
+      "velicina_slike": "srednja",
+      "naslov": "test 2019 goidna ",
+      "izgled": "left",
+      "tekst": "wknfafjnajnckalc\nCAdaScaC\ncascacac\nascascascascaca\navsrgrghtdhfdgb\ndfvdfvdv",
+      "velicina_galerije": "mala"
+    },
+    {
+      "godina": "2027",
+      "galerija": [
+        "/images/uploads/123.jpg",
+        "/images/uploads/familija.jpg",
+        "/images/uploads/1e.jpg"
+      ],
+      "slika": "/images/uploads/screenshot-2026-06-23-224157.png",
+      "opis": "qwed",
+      "izgled_galerije": "end",
+      "velicina_slike": "srednja",
+      "naslov": "testtt 2027",
+      "izgled": "right",
+      "tekst": "cjajcnkcnjks\nacscacasc\nasdc\ns\\zhdfh\nfhj\nfh\nf\nhz\nh\nfh\nfjffhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh",
+      "velicina_galerije": "srednja"
     }
   ]
 }
