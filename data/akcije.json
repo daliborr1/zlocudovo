@@ -30,6 +30,21 @@
       "izgled": "left",
       "tekst": "wknfafjnajnckalc\nCAdaScaC\ncascacac\nascascascascaca\navsrgrghtdhfdgb\ndfvdfvdv",
       "velicina_galerije": "mala"
+    },
+    {
+      "godina": "2027",
+      "galerija": [
+        "/images/uploads/123.jpg",
+        "/images/uploads/familija.jpg",
+        "/images/uploads/1e.jpg"
+      ],
+      "opis": "qwed",
+      "izgled_galerije": "end",
+      "velicina_slike": "srednja",
+      "naslov": "testtt 2027",
+      "izgled": "top",
+      "tekst": "cjajcnkcnjks\nacscacasc\nasdc\ns\\zhdfh\nfhj\nfh\nf\nhz\nh\nfh\nfjffhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh",
+      "velicina_galerije": "srednja"
     }
   ]
 }
