@@ -1,3 +1,20 @@
 {
-  "akcije": []
+  "akcije": [
+    {
+      "godina": "2026",
+      "galerija": [
+        "/images/uploads/screenshot-2026-06-23-224157.png",
+        "/images/uploads/123.jpg",
+        "/images/uploads/1e.jpg"
+      ],
+      "slika": "/images/uploads/1e.jpg",
+      "opis": "test slajd raspored",
+      "izgled_galerije": "top",
+      "velicina_slike": "mala",
+      "naslov": "novi test ",
+      "izgled": "left",
+      "tekst": "ovoer je test dawdawd\nAwdawdadad\ndawdwadawd\nwdwrfsfgsdv\nsfsgthfhygujkhikjhgfdserwterytuykihj\ntfhtfthfdth",
+      "velicina_galerije": "srednja"
+    }
+  ]
 }
