@@ -12,113 +12,110 @@ locale: "sr"
 collections:
   - name: "akcije"
     label: "Akcije"
-    files:
-      - name: "spisak-akcija"
-        label: "Spisak akcija"
-        file: "data/akcije.json"
+    folder: "content/akcije"
+    create: true
+    slug: "{{godina}}-{{slug}}"
+    identifier_field: "naslov"
+    summary: "{{godina}} — {{naslov}}"
+    extension: "json"
+    format: "json"
+    fields:
+      - label: "Godina"
+        name: "godina"
+        widget: "string"
+        hint: "Unesi godinu u formatu GGGG, npr. 2026"
+        pattern: ["^[0-9]{4}$", "Godina mora imati tačno 4 cifre, npr. 2026"]
+      - label: "Naslov"
+        name: "naslov"
+        widget: "string"
+      - label: "Kratak opis"
+        name: "opis"
+        widget: "markdown"
+        hint: "Prikazuje se na kartici na početnoj strani i u zaglavlju stranice akcije."
+        buttons: ["bold", "italic", "link"]
+        modes: ["rich_text"]
+      - label: "Glavna slika"
+        name: "glavna_slika"
+        widget: "object"
+        collapsed: true
+        summary: "{{fields.izgled}}"
         fields:
-          - label: "Akcije"
-            name: "akcije"
-            widget: "list"
-            label_singular: "Akcija"
-            summary: "{{godina}} — {{naslov}}"
-            fields:
-              - label: "Godina"
-                name: "godina"
-                widget: "string"
-                hint: "Unesi godinu u formatu GGGG, npr. 2026"
-                pattern: ["^[0-9]{4}$", "Godina mora imati tačno 4 cifre, npr. 2026"]
-              - label: "Naslov"
-                name: "naslov"
-                widget: "string"
-              - label: "Kratak opis"
-                name: "opis"
-                widget: "markdown"
-                hint: "Prikazuje se na kartici na početnoj strani i u zaglavlju stranice akcije."
-                buttons: ["bold", "italic", "link"]
-                modes: ["rich_text"]
-              - label: "Glavna slika"
-                name: "glavna_slika"
-                widget: "object"
-                collapsed: true
-                summary: "{{fields.izgled}}"
-                fields:
-                  - label: "Raspored"
-                    name: "izgled"
-                    widget: "select"
-                    default: "top"
-                    options:
-                      - { label: "Slika iznad teksta", value: "top" }
-                      - { label: "Slika levo od teksta", value: "left" }
-                      - { label: "Slika desno od teksta", value: "right" }
-                      - { label: "Bez glavne slike", value: "none" }
-                  - label: "Slika"
-                    name: "slika"
-                    widget: "image"
-                    required: false
-                  - label: "Veličina"
-                    name: "velicina_slike"
-                    widget: "select"
-                    default: "srednja"
-                    required: false
-                    options:
-                      - { label: "Mala", value: "mala" }
-                      - { label: "Srednja", value: "srednja" }
-                      - { label: "Velika (puna širina)", value: "velika" }
-                  - label: "Opis slike"
-                    name: "opis_slike"
-                    widget: "markdown"
-                    required: false
-                    hint: "Kratak tekst ispod slike (opciono)"
-                    buttons: ["bold", "italic", "link"]
-                    modes: ["rich_text"]
-              - label: "Tekst"
-                name: "tekst"
-                widget: "markdown"
-                hint: "Podebljano, kurziv, naslovi, liste, citat, linkovi i slike ubačene direktno u tekst. Prazan red pravi novi pasus."
-                buttons: ["bold", "italic", "link", "heading-two", "heading-three", "quote", "bulleted-list", "numbered-list"]
-                editor_components: ["image"]
-              - label: "Galerija (slajd šou)"
-                name: "galerija_grupa"
-                widget: "object"
-                collapsed: true
-                summary: "{{fields.izgled_galerije}}"
-                fields:
-                  - label: "Slike"
-                    name: "galerija"
-                    widget: "image"
-                    required: false
-                    hint: "Klikni 'Choose an image', pa u galeriji medija drži Ctrl (ili Cmd na Mac-u) i klikni da izabereš više slika odjednom — isto tako možeš i da uploaduješ više fajlova odjednom. 2+ slike prikazuju se kao slajd šou."
-                    media_library:
-                      config:
-                        multiple: true
-                        max_files: 20
-                  - label: "Raspored"
-                    name: "izgled_galerije"
-                    widget: "select"
-                    default: "top"
-                    required: false
-                    options:
-                      - { label: "Galerija iznad teksta", value: "top" }
-                      - { label: "Galerija levo od teksta", value: "left" }
-                      - { label: "Galerija desno od teksta", value: "right" }
-                      - { label: "Galerija na kraju teksta", value: "end" }
-                  - label: "Veličina"
-                    name: "velicina_galerije"
-                    widget: "select"
-                    default: "srednja"
-                    required: false
-                    options:
-                      - { label: "Mala", value: "mala" }
-                      - { label: "Srednja", value: "srednja" }
-                      - { label: "Velika (puna širina)", value: "velika" }
-                  - label: "Opis galerije"
-                    name: "opis_galerije"
-                    widget: "markdown"
-                    required: false
-                    hint: "Kratak tekst ispod galerije/slajd šoua (opciono)"
-                    buttons: ["bold", "italic", "link"]
-                    modes: ["rich_text"]
+          - label: "Raspored"
+            name: "izgled"
+            widget: "select"
+            default: "top"
+            options:
+              - { label: "Slika iznad teksta", value: "top" }
+              - { label: "Slika levo od teksta", value: "left" }
+              - { label: "Slika desno od teksta", value: "right" }
+              - { label: "Bez glavne slike", value: "none" }
+          - label: "Slika"
+            name: "slika"
+            widget: "image"
+            required: false
+          - label: "Veličina"
+            name: "velicina_slike"
+            widget: "select"
+            default: "srednja"
+            required: false
+            options:
+              - { label: "Mala", value: "mala" }
+              - { label: "Srednja", value: "srednja" }
+              - { label: "Velika (puna širina)", value: "velika" }
+          - label: "Opis slike"
+            name: "opis_slike"
+            widget: "markdown"
+            required: false
+            hint: "Kratak tekst ispod slike (opciono)"
+            buttons: ["bold", "italic", "link"]
+            modes: ["rich_text"]
+      - label: "Tekst"
+        name: "tekst"
+        widget: "markdown"
+        hint: "Podebljano, kurziv, naslovi, liste, citat, linkovi i slike ubačene direktno u tekst. Prazan red pravi novi pasus."
+        buttons: ["bold", "italic", "link", "heading-two", "heading-three", "quote", "bulleted-list", "numbered-list"]
+        editor_components: ["image"]
+      - label: "Galerija (slajd šou)"
+        name: "galerija_grupa"
+        widget: "object"
+        collapsed: true
+        summary: "{{fields.izgled_galerije}}"
+        fields:
+          - label: "Slike"
+            name: "galerija"
+            widget: "image"
+            required: false
+            hint: "Klikni 'Choose an image', pa u galeriji medija drži Ctrl (ili Cmd na Mac-u) i klikni da izabereš više slika odjednom — isto tako možeš i da uploaduješ više fajlova odjednom. 2+ slike prikazuju se kao slajd šou."
+            media_library:
+              config:
+                multiple: true
+                max_files: 20
+          - label: "Raspored"
+            name: "izgled_galerije"
+            widget: "select"
+            default: "top"
+            required: false
+            options:
+              - { label: "Galerija iznad teksta", value: "top" }
+              - { label: "Galerija levo od teksta", value: "left" }
+              - { label: "Galerija desno od teksta", value: "right" }
+              - { label: "Galerija na kraju teksta", value: "end" }
+          - label: "Veličina"
+            name: "velicina_galerije"
+            widget: "select"
+            default: "srednja"
+            required: false
+            options:
+              - { label: "Mala", value: "mala" }
+              - { label: "Srednja", value: "srednja" }
+              - { label: "Velika (puna širina)", value: "velika" }
+          - label: "Opis galerije"
+            name: "opis_galerije"
+            widget: "markdown"
+            required: false
+            hint: "Kratak tekst ispod galerije/slajd šoua (opciono)"
+            buttons: ["bold", "italic", "link"]
+            modes: ["rich_text"]
 
   - name: "najave"
     label: "Najave"
@@ -144,4 +141,42 @@ collections:
                 default: "Sledeća akcija"
               - label: "Tekst"
                 name: "tekst"
-                widget: "text"
+                widget: "markdown"
+                hint: "Podebljano, kurziv, naslovi, liste, citat, linkovi. Prazan red pravi novi pasus."
+                buttons: ["bold", "italic", "link", "heading-two", "heading-three", "quote", "bulleted-list", "numbered-list"]
+              - label: "Glavna slika"
+                name: "glavna_slika"
+                widget: "object"
+                collapsed: true
+                required: false
+                summary: "{{fields.izgled}}"
+                fields:
+                  - label: "Raspored"
+                    name: "izgled"
+                    widget: "select"
+                    default: "top"
+                    options:
+                      - { label: "Slika iznad teksta", value: "top" }
+                      - { label: "Slika levo od teksta", value: "left" }
+                      - { label: "Slika desno od teksta", value: "right" }
+                      - { label: "Bez slike", value: "none" }
+                  - label: "Slika"
+                    name: "slika"
+                    widget: "image"
+                    required: false
+                  - label: "Veličina"
+                    name: "velicina_slike"
+                    widget: "select"
+                    default: "srednja"
+                    required: false
+                    options:
+                      - { label: "Mala", value: "mala" }
+                      - { label: "Srednja", value: "srednja" }
+                      - { label: "Velika (puna širina)", value: "velika" }
+                  - label: "Opis slike"
+                    name: "opis_slike"
+                    widget: "markdown"
+                    required: false
+                    hint: "Kratak tekst ispod slike (opciono)"
+                    buttons: ["bold", "italic", "link"]
+                    modes: ["rich_text"]

@@ -27,6 +27,13 @@ window.ZlocudovoAkcije = (function(){
       .catch(function(){ return []; });
   }
 
+  function fetchNajave(){
+    return fetch('/data/najave.json', { cache: 'no-store' })
+      .then(function(r){ return r.ok ? r.json() : { najave: [] }; })
+      .then(function(data){ return (data && data.najave) ? data.najave : []; })
+      .catch(function(){ return []; });
+  }
+
   // Mali markdown-lite renderer: naslovi (#, ##, ###), **podebljano**, *kurziv*,
   // [link](url), ![slika](url), > citat, liste (- / 1.). Sav tekst se escape-uje
   // pre nego sto se markdown sintaksa pretvori u HTML, pa je bezbedno od XSS-a.
@@ -91,30 +98,33 @@ window.ZlocudovoAkcije = (function(){
     }).join('');
   }
 
+  // --- Deljeni gradivni blokovi za pozicioniranje slike/galerije uz tekst ---
+  // Koriste ih i akcije (hero+telo) i najave (kompaktna kartica), pa su
+  // izdvojeni na nivo modula umesto da budu zakucani unutar jedne funkcije.
+  function sizeClass(v){ return (v === 'mala' || v === 'velika') ? v : 'srednja'; }
+
+  function mediaBlock(velicina, inner, extraClass){
+    return '<div class="akcija-media-block size-' + sizeClass(velicina) + (extraClass ? ' ' + extraClass : '') + '">' + inner + '</div>';
+  }
+
+  function mediaRow(pos, velicina, mediaInner, textHtml){
+    var p = (pos === 'right') ? 'right' : 'left';
+    return '<div class="akcija-media-row pos-' + p + ' size-' + sizeClass(velicina) + '">' +
+      '<div class="akcija-media-slot">' + mediaInner + '</div>' +
+      '<div class="akcija-text-slot">' + textHtml + '</div>' +
+    '</div>';
+  }
+
+  function captionHtml(text){
+    return text ? '<p class="slideshow-note">' + renderInline(text) + '</p>' : '';
+  }
+
   // Zajednicka HTML struktura jedne akcije (hero + telo) - koristi je i
   // akcije/prikaz.html (prava stranica) i admin/preview.js (CMS preview),
   // tako da preview stvarno izgleda kao prava stranica.
   function renderAkcijaHtml(item, opts){
     opts = opts || {};
     var slideId = opts.slideshowId || 'akcijaSlideshow';
-
-    function sizeClass(v){ return (v === 'mala' || v === 'velika') ? v : 'srednja'; }
-
-    function mediaBlock(velicina, inner, extraClass){
-      return '<div class="akcija-media-block size-' + sizeClass(velicina) + (extraClass ? ' ' + extraClass : '') + '">' + inner + '</div>';
-    }
-
-    function mediaRow(pos, velicina, mediaInner, textHtml){
-      var p = (pos === 'right') ? 'right' : 'left';
-      return '<div class="akcija-media-row pos-' + p + ' size-' + sizeClass(velicina) + '">' +
-        '<div class="akcija-media-slot">' + mediaInner + '</div>' +
-        '<div class="akcija-text-slot">' + textHtml + '</div>' +
-      '</div>';
-    }
-
-    function captionHtml(text){
-      return text ? '<p class="slideshow-note">' + renderInline(text) + '</p>' : '';
-    }
 
     var slikaG = item.glavna_slika || {};
     var galG = item.galerija_grupa || {};
@@ -177,13 +187,35 @@ window.ZlocudovoAkcije = (function(){
       '</article>';
   }
 
+  // Kompaktan prikaz jedne najave (naslov + opciona slika + tekst) - za
+  // ".fact-plank" karticu na pocetnoj strani i za CMS preview.
+  function renderNajavaHtml(item){
+    var slikaG = item.glavna_slika || {};
+    var imgInner = slikaG.slika
+      ? '<img class="akcija-hero-img" src="' + escapeHtml(slikaG.slika) + '" alt="' + escapeHtml(item.naslov || '') + '">' + captionHtml(slikaG.opis_slike)
+      : '';
+
+    var izgled = slikaG.izgled || 'top';
+    var textHtml = renderMarkdown(item.tekst);
+
+    if(imgInner && (izgled === 'left' || izgled === 'right')){
+      textHtml = mediaRow(izgled, slikaG.velicina_slike, imgInner, textHtml);
+    } else if(imgInner && izgled === 'top'){
+      textHtml = mediaBlock(slikaG.velicina_slike, imgInner) + textHtml;
+    }
+
+    return '<b>' + escapeHtml(item.naslov || 'Sledeća akcija') + '</b>' + textHtml;
+  }
+
   return {
     slugify: slugify,
     escapeHtml: escapeHtml,
     slugFor: slugFor,
     fetchAkcije: fetchAkcije,
+    fetchNajave: fetchNajave,
     renderMarkdown: renderMarkdown,
     renderInline: renderInline,
-    renderAkcijaHtml: renderAkcijaHtml
+    renderAkcijaHtml: renderAkcijaHtml,
+    renderNajavaHtml: renderNajavaHtml
   };
 })();

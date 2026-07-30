@@ -98,6 +98,21 @@
   .about-grid p{margin:0 0 16px; max-width:56ch;}
   .fact-plank{ background:var(--cream-2); border-left:4px solid var(--moss); padding:16px 20px; margin-bottom:14px; font-size:0.92rem; }
   .fact-plank b{display:block; font-family:var(--font-display); font-size:1.1rem; margin-bottom:2px;}
+  .fact-plank p{ margin:0 0 10px; }
+
+  /* Kompaktna verzija akcija-media-block/row klasa, za "Najave" karticu na pocetnoj */
+  .najava-plank .akcija-media-block{ margin:8px 0; }
+  .najava-plank .akcija-media-block.size-mala{ max-width:100px; }
+  .najava-plank .akcija-media-block.size-srednja{ max-width:160px; }
+  .najava-plank .akcija-media-block.size-velika{ max-width:100%; }
+  .najava-plank .akcija-media-row{ grid-template-columns:100px 1fr; gap:16px; margin:8px 0; }
+  .najava-plank .akcija-media-row.pos-right{ grid-template-columns:1fr 100px; }
+  .najava-plank .akcija-media-row.size-mala{ grid-template-columns:70px 1fr; }
+  .najava-plank .akcija-media-row.pos-right.size-mala{ grid-template-columns:1fr 70px; }
+  .najava-plank .akcija-media-row.size-velika{ grid-template-columns:160px 1fr; }
+  .najava-plank .akcija-media-row.pos-right.size-velika{ grid-template-columns:1fr 160px; }
+  .najava-plank .akcija-hero-img{ border-radius:2px; }
+  .najava-plank .slideshow-note{ margin-top:4px; }
 
   .stats-strip{ background:var(--walnut); color:var(--cream); }
   .stats-strip section{padding:56px 32px;}
@@ -537,9 +552,9 @@
 
 <section id="najave">
   <div class="section-head"><span class="tag" style="color:var(--river)">05</span><h2>Najave</h2></div>
-  <div class="fact-plank" style="border-left-color:var(--river)">
-    <b id="najavaNaslov">Sledeća akcija</b>
-    <span id="najavaTekst">Datum i detalji sledećeg humanitarnog turnira ili akcije pošumljavanja biće objavljeni ovde čim se potvrde. Za najsvežije vesti pratite <a href="https://www.instagram.com/zlocudovo/" target="_blank" rel="noopener" style="color:var(--river); border-bottom:1px solid var(--river);">Instagram @zlocudovo</a>.</span>
+  <div class="fact-plank najava-plank" id="najavaPlank" style="border-left-color:var(--river)">
+    <b>Sledeća akcija</b>
+    <span>Datum i detalji sledećeg humanitarnog turnira ili akcije pošumljavanja biće objavljeni ovde čim se potvrde. Za najsvežije vesti pratite <a href="https://www.instagram.com/zlocudovo/" target="_blank" rel="noopener" style="color:var(--river); border-bottom:1px solid var(--river);">Instagram @zlocudovo</a>.</span>
   </div>
 </section>
 
@@ -893,18 +908,15 @@ window.initTimelineCollapse = function(){
 
 <script>
 (function(){
-  fetch('/data/najave.json', { cache: 'no-store' })
-    .then(function(r){ return r.ok ? r.json() : { najave: [] }; })
-    .then(function(data){
-      var list = (data && data.najave) ? data.najave : [];
-      var active = list.filter(function(n){ return n && n.aktivna; })[0];
-      if(!active) return;
-      var naslovEl = document.getElementById('najavaNaslov');
-      var tekstEl = document.getElementById('najavaTekst');
-      if(naslovEl) naslovEl.textContent = active.naslov || 'Sledeća akcija';
-      if(tekstEl) tekstEl.textContent = active.tekst || '';
-    })
-    .catch(function(){});
+  var Z = window.ZlocudovoAkcije;
+  var plank = document.getElementById('najavaPlank');
+  if(!Z || !plank) return;
+
+  Z.fetchNajave().then(function(list){
+    var active = list.filter(function(n){ return n && n.aktivna; })[0];
+    if(!active) return;
+    plank.innerHTML = Z.renderNajavaHtml(active);
+  });
 })();
 </script>
 

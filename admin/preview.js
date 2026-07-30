@@ -2,22 +2,14 @@
   if(!window.CMS || !window.createClass || !window.h) return;
   var Z = window.ZlocudovoAkcije;
 
-  var AkcijePreview = createClass({
+  // "akcije" je sad folder kolekcija (jedan fajl po akciji) - jedan entry
+  // = jedna akcija, pa preview prikazuje samo nju, ne celu listu.
+  var AkcijaPreview = createClass({
     render: function(){
       var entry = this.props.entry;
-      var list = entry.getIn(['data', 'akcije']);
-      var items = list ? list.toJS() : [];
-
-      if(!items.length){
-        return h('div', { className: 'preview-empty' }, 'Nema unetih akcija.');
-      }
-
-      var html = items.map(function(item, i){
-        var label = '<div class="preview-item-label">Akcija #' + (i + 1) + (item.godina ? ' — ' + item.godina : '') + '</div>';
-        var body = Z ? Z.renderAkcijaHtml(item, { slideshowId: 'preview-slide-' + i }) : '';
-        return label + body;
-      }).join('<hr class="preview-sep">');
-
+      var data = entry.get('data');
+      var item = data ? data.toJS() : {};
+      var html = Z ? Z.renderAkcijaHtml(item, { slideshowId: 'preview-slide' }) : '';
       return h('div', { className: 'preview-wrap', dangerouslySetInnerHTML: { __html: html } });
     }
   });
@@ -32,24 +24,22 @@
         return h('div', { className: 'preview-empty' }, 'Nema unetih najava.');
       }
 
-      var esc = Z ? Z.escapeHtml : function(s){ return s; };
       var html = items.map(function(item, i){
         var flag = item.aktivna ? ' — AKTIVNA (prikazuje se na sajtu)' : '';
+        var body = Z ? Z.renderNajavaHtml(item) : '';
         return '<div class="preview-item-label">Najava #' + (i + 1) + flag + '</div>' +
-          '<div class="fact-plank">' +
-            '<b>' + esc(item.naslov || 'Sledeća akcija') + '</b>' +
-            esc(item.tekst || '') +
-          '</div>';
+          '<div class="fact-plank">' + body + '</div>';
       }).join('<hr class="preview-sep">');
 
       return h('div', { className: 'preview-wrap', dangerouslySetInnerHTML: { __html: html } });
     }
   });
 
-  // Registruje se po imenu FAJLA (ne kolekcije) - Decap CMS ima poznat bag
-  // gde registerPreviewTemplate ne radi kad se registruje po imenu "files"
-  // kolekcije, samo po imenu pojedinacnog fajla unutar nje.
-  CMS.registerPreviewTemplate('spisak-akcija', AkcijePreview);
+  // "akcije" (folder kolekcija) registruje se po imenu kolekcije.
+  // "najave" (files kolekcija) i dalje po imenu fajla - Decap CMS ima poznat
+  // bag gde registerPreviewTemplate ne radi kad se registruje po imenu
+  // "files" kolekcije, samo po imenu pojedinacnog fajla unutar nje.
+  CMS.registerPreviewTemplate('akcije', AkcijaPreview);
   CMS.registerPreviewTemplate('spisak-najave', NajavePreview);
 
   CMS.registerPreviewStyle('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=Work+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap');
