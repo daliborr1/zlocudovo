@@ -1,7 +1,7 @@
 {
   "najave": [
     {
-      "aktivna": true,
+      "aktivna": false,
       "naslov": "test najave",
       "tekst": "test dela za najave"
     }
