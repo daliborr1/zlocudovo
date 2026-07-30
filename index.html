@@ -84,6 +84,8 @@
   .ring-caption{ font-family:var(--font-mono); font-size:0.72rem; text-align:center; color:rgba(241,230,205,0.5); margin-top:10px; letter-spacing:0.04em; }
   .ring-label{ font-family:var(--font-mono); font-size:9.5px; fill:rgba(241,230,205,0.8); }
   .ring-num{ font-family:var(--font-display); font-weight:600; }
+  .rings-rotate{ transform-origin:170px 170px; animation:ringsSpin 140s linear infinite; }
+  @keyframes ringsSpin{ from{ transform:rotate(0deg); } to{ transform:rotate(360deg); } }
   .leader{ stroke:rgba(241,230,205,0.35); stroke-width:1; }
 
   section{ max-width:1080px; margin:0 auto; padding:80px 32px; }
@@ -318,23 +320,25 @@
         <circle cx="170" cy="172" r="150" fill="none" stroke="#4a3a26" stroke-width="1.5" filter="url(#grain2)"/>
         <circle cx="170" cy="172" r="132" fill="none" stroke="rgba(241,230,205,0.16)" stroke-width="1.5" filter="url(#grain1)"/>
 
-        <circle cx="170" cy="170" r="112" fill="none" stroke="rgba(241,230,205,0.22)" stroke-width="15" filter="url(#grain1)"/>
-        <circle cx="170" cy="170" r="92"  fill="none" stroke="rgba(241,230,205,0.28)" stroke-width="15" filter="url(#grain1)"/>
-        <circle cx="170" cy="170" r="70"  fill="none" stroke="rgba(241,230,205,0.36)" stroke-width="15" filter="url(#grain1)"/>
-        <circle cx="170" cy="170" r="46"  fill="none" stroke="rgba(241,230,205,0.44)" stroke-width="15" filter="url(#grain1)"/>
+        <g class="rings-rotate">
+          <circle cx="170" cy="170" r="112" fill="none" stroke="rgba(241,230,205,0.22)" stroke-width="15" filter="url(#grain1)"/>
+          <circle cx="170" cy="170" r="92"  fill="none" stroke="rgba(241,230,205,0.28)" stroke-width="15" filter="url(#grain1)"/>
+          <circle cx="170" cy="170" r="70"  fill="none" stroke="rgba(241,230,205,0.36)" stroke-width="15" filter="url(#grain1)"/>
+          <circle cx="170" cy="170" r="46"  fill="none" stroke="rgba(241,230,205,0.44)" stroke-width="15" filter="url(#grain1)"/>
 
-        <text class="ring-label" font-size="9.5" dy="3">
-          <textPath href="#ringPath1" startOffset="50%" text-anchor="middle">54 domaćinstva</textPath>
-        </text>
-        <text class="ring-label" font-size="9.5" dy="3">
-          <textPath href="#ringPath2" startOffset="50%" text-anchor="middle">5,02 po domaćinstvu</textPath>
-        </text>
-        <text class="ring-label" font-size="9.5" dy="3">
-          <textPath href="#ringPath3" startOffset="50%" text-anchor="middle">38,9 god. starost</textPath>
-        </text>
-        <text class="ring-label" font-size="9" dy="3">
-          <textPath href="#ringPath4" startOffset="50%" text-anchor="middle">212 punoletnih</textPath>
-        </text>
+          <text class="ring-label" font-size="9.5" dy="3">
+            <textPath href="#ringPath1" startOffset="50%" text-anchor="middle">54 domaćinstva</textPath>
+          </text>
+          <text class="ring-label" font-size="9.5" dy="3">
+            <textPath href="#ringPath2" startOffset="50%" text-anchor="middle">5,02 po domaćinstvu</textPath>
+          </text>
+          <text class="ring-label" font-size="9.5" dy="3">
+            <textPath href="#ringPath3" startOffset="50%" text-anchor="middle">38,9 god. starost</textPath>
+          </text>
+          <text class="ring-label" font-size="9" dy="3">
+            <textPath href="#ringPath4" startOffset="50%" text-anchor="middle">212 punoletnih</textPath>
+          </text>
+        </g>
 
         <circle cx="170" cy="170" r="30" fill="url(#coreGrad)" filter="url(#grain1)"/>
         <text x="170" y="176" text-anchor="middle" class="ring-num" font-size="20" fill="var(--walnut)">240</text>

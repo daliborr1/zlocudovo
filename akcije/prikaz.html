@@ -31,14 +31,6 @@
   var el = document.getElementById('sadrzaj');
   var slug = new URLSearchParams(window.location.search).get('slug');
 
-  function paragraphs(text){
-    return String(text || '')
-      .split(/\n\s*\n/)
-      .filter(function(block){ return block.trim().length; })
-      .map(function(block){ return '<p>' + Z.escapeHtml(block.trim()).replace(/\n/g, '<br>') + '</p>'; })
-      .join('');
-  }
-
   function notFound(){
     document.title = 'Akcija nije pronađena — Zloćudovo';
     el.innerHTML =
@@ -61,83 +53,15 @@
     }
     document.title = item.naslov + ' (' + item.godina + ') — Zloćudovo';
 
-    function sizeClass(v){ return (v === 'mala' || v === 'velika') ? v : 'srednja'; }
+    el.innerHTML = Z.renderAkcijaHtml(item, { slideshowId: 'akcijaSlideshow' });
 
-    function mediaBlock(velicina, inner, extraClass){
-      return '<div class="akcija-media-block size-' + sizeClass(velicina) + (extraClass ? ' ' + extraClass : '') + '">' + inner + '</div>';
+    var body = el.querySelector('.akcija-body');
+    if(body){
+      var nav = document.createElement('div');
+      nav.className = 'akcija-nav-between';
+      nav.innerHTML = '<a href="../index.html#akcije">← Sve akcije</a>';
+      body.appendChild(nav);
     }
-
-    function mediaRow(pos, velicina, mediaInner, textHtml){
-      var p = (pos === 'right') ? 'right' : 'left';
-      return '<div class="akcija-media-row pos-' + p + ' size-' + sizeClass(velicina) + '">' +
-        '<div class="akcija-media-slot">' + mediaInner + '</div>' +
-        '<div class="akcija-text-slot">' + textHtml + '</div>' +
-      '</div>';
-    }
-
-    function captionHtml(text){
-      return text ? '<p class="slideshow-note">' + Z.escapeHtml(text) + '</p>' : '';
-    }
-
-    var imgInner = item.slika
-      ? '<img class="akcija-hero-img" src="' + Z.escapeHtml(item.slika) + '" alt="' + Z.escapeHtml(item.naslov) + '">' + captionHtml(item.opis_slike)
-      : '';
-
-    var galerija = Array.isArray(item.galerija)
-      ? item.galerija.map(function(g){ return typeof g === 'string' ? g : (g && g.slika); }).filter(Boolean)
-      : [];
-    var galleryInner = '';
-    if(galerija.length){
-      var slides = galerija.map(function(src, i){
-        return '<div class="slide' + (i === 0 ? ' active' : '') + '"><img src="' + Z.escapeHtml(src) + '" alt="' + Z.escapeHtml(item.naslov) + '"></div>';
-      }).join('');
-      var controls = galerija.length > 1
-        ? '<button type="button" class="slide-nav prev" aria-label="Prethodna slika">‹</button>' +
-          '<button type="button" class="slide-nav next" aria-label="Sledeća slika">›</button>' +
-          '<div class="slide-dots"></div>'
-        : '';
-      galleryInner = '<div class="slideshow" id="akcijaSlideshow">' + slides + controls + '</div>' + captionHtml(item.opis_galerije);
-    }
-
-    var izgled = item.izgled || 'top';
-    var izgledG = item.izgled_galerije || 'top';
-    var textHtml = paragraphs(item.tekst);
-
-    var pre = [];   // blokovi pre teksta
-    var post = [];  // blokovi posle teksta (npr. galerija na kraju)
-    var rowUsed = false;
-
-    if(imgInner && (izgled === 'left' || izgled === 'right')){
-      textHtml = mediaRow(izgled, item.velicina_slike, imgInner, textHtml);
-      rowUsed = true;
-    } else if(imgInner && izgled === 'top'){
-      pre.push(mediaBlock(item.velicina_slike, imgInner));
-    }
-    // izgled === 'none' -> slika se ne prikazuje
-
-    if(galleryInner){
-      if(!rowUsed && (izgledG === 'left' || izgledG === 'right')){
-        textHtml = mediaRow(izgledG, item.velicina_galerije, galleryInner, textHtml);
-        rowUsed = true;
-      } else if(izgledG === 'end'){
-        post.push(mediaBlock(item.velicina_galerije, galleryInner, 'akcija-gallery pos-end'));
-      } else {
-        pre.push(mediaBlock(item.velicina_galerije, galleryInner, 'akcija-gallery'));
-      }
-    }
-
-    el.innerHTML =
-      '<section class="akcija-hero"><div class="akcija-hero-inner">' +
-        '<span class="yr">' + Z.escapeHtml(item.godina) + '</span>' +
-        '<h1>' + Z.escapeHtml(item.naslov) + '</h1>' +
-        '<p class="lede">' + Z.escapeHtml(item.opis || '') + '</p>' +
-      '</div></section>' +
-      '<article class="akcija-body">' +
-        pre.join('') +
-        textHtml +
-        post.join('') +
-        '<div class="akcija-nav-between"><a href="../index.html#akcije">← Sve akcije</a></div>' +
-      '</article>';
 
     initSlideshow();
   });

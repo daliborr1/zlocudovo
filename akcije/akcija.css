@@ -35,6 +35,12 @@ header.nav{ position:sticky; top:0; z-index:50; display:flex; align-items:center
 
 article.akcija-body{ max-width:1080px; margin:0 auto; padding:56px 32px 80px; }
 article.akcija-body p{ margin:0 0 18px; max-width:64ch; font-size:1rem; }
+article.akcija-body h2, article.akcija-body h3, article.akcija-body h4{ font-family:var(--font-display); font-weight:600; color:var(--ink); margin:28px 0 14px; }
+article.akcija-body h2{ font-size:1.5rem; }
+article.akcija-body h3{ font-size:1.25rem; }
+article.akcija-body h4{ font-size:1.05rem; }
+article.akcija-body ol{ margin:24px 0; padding-left:22px; max-width:64ch; }
+article.akcija-body ol li{ margin-bottom:6px; }
 .akcija-quote{ font-family:var(--font-display); font-style:italic; font-size:1.1rem; color:var(--rust); border-left:3px solid var(--rust); padding-left:18px; margin:28px 0; }
 
 .akcija-facts{ list-style:none; margin:24px 0; padding:0; display:grid; gap:10px; }

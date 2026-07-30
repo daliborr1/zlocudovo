@@ -63,8 +63,10 @@ collections:
                 hint: "Kratak tekst ispod glavne slike (opciono)"
               - label: "Tekst"
                 name: "tekst"
-                widget: "text"
-                hint: "Pun tekst akcije. Prazan red između redova pravi novi pasus."
+                widget: "markdown"
+                hint: "Podebljano, kurziv, naslovi, liste, citat, linkovi i slike ubačene direktno u tekst. Prazan red pravi novi pasus."
+                buttons: ["bold", "italic", "link", "heading-two", "heading-three", "quote", "bulleted-list", "numbered-list"]
+                editor_components: ["image"]
               - label: "Galerija (slajd šou, opciono)"
                 name: "galerija"
                 widget: "image"
