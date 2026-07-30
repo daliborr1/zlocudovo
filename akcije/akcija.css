@@ -60,23 +60,20 @@ article.akcija-body p{ margin:0 0 18px; max-width:64ch; font-size:1rem; }
 
 footer{ text-align:center; padding:28px 32px; font-family:var(--font-mono); font-size:0.78rem; color:rgba(43,32,21,0.6); }
 
-.akcija-hero-img{ display:block; max-width:100%; height:auto; margin:0 0 8px; }
+.akcija-hero-img{ display:block; width:100%; height:auto; }
 .akcija-loading{ padding:56px 32px; text-align:center; font-family:var(--font-mono); color:rgba(34,25,19,0.6); }
 
-.img-size-mala{ max-width:220px; }
-.img-size-srednja{ max-width:420px; }
-.img-size-velika{ max-width:100%; }
+.akcija-media{ margin:0 0 24px; }
+.akcija-media.pos-top{ clear:both; }
+.akcija-media.pos-left{ float:left; margin:4px 24px 16px 0; }
+.akcija-media.pos-right{ float:right; margin:4px 0 16px 24px; }
+.akcija-media.size-mala{ width:220px; max-width:45%; }
+.akcija-media.size-srednja{ width:380px; max-width:60%; }
+.akcija-media.size-velika{ width:100%; max-width:100%; }
+.akcija-media.pos-top.size-mala, .akcija-media.pos-top.size-srednja{ max-width:100%; }
+.akcija-clear{ clear:both; }
 
-.akcija-media-row{ display:flex; gap:32px; align-items:flex-start; flex-wrap:wrap; margin:0 0 8px; }
-.akcija-media-row.izgled-right{ flex-direction:row-reverse; }
-.akcija-media-row .akcija-media-col{ flex:1 1 220px; }
-.akcija-media-row .akcija-media-col.img-size-mala{ flex-basis:200px; max-width:220px; }
-.akcija-media-row .akcija-media-col.img-size-srednja{ flex-basis:320px; max-width:420px; }
-.akcija-media-row .akcija-media-col.img-size-velika{ flex-basis:420px; }
-.akcija-media-row .akcija-media-col img{ margin:0; }
-.akcija-media-row .akcija-text-col{ flex:2 1 320px; min-width:240px; }
-
-.akcija-gallery{ margin:28px 0; max-width:640px; }
+.akcija-media .slideshow{ width:100%; }
 
 .slideshow{ position:relative; background:var(--walnut); aspect-ratio:4/3; overflow:hidden; }
 .slideshow .slide{ position:absolute; inset:0; opacity:0; transition:opacity .8s ease; }

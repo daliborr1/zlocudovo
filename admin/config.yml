@@ -62,8 +62,28 @@ collections:
                 hint: "Pun tekst akcije. Prazan red između redova pravi novi pasus."
               - label: "Galerija (slajd šou, opciono)"
                 name: "galerija"
-                widget: "list"
+                widget: "image"
                 required: false
-                hint: "Dodaj 2 ili više slika da bi se prikazao slajd šou ispod teksta."
-                fields:
-                  - { label: "Slika", name: "slika", widget: "image" }
+                hint: "Klikni 'Choose an image', pa u galeriji medija drži Ctrl (ili Cmd na Mac-u) i klikni da izabereš više slika odjednom — isto tako možeš i da uploaduješ više fajlova odjednom. 2+ slike prikazuju se kao slajd šou."
+                media_library:
+                  config:
+                    multiple: true
+                    max_files: 20
+              - label: "Raspored galerije"
+                name: "izgled_galerije"
+                widget: "select"
+                default: "top"
+                required: false
+                options:
+                  - { label: "Galerija iznad teksta", value: "top" }
+                  - { label: "Galerija levo od teksta", value: "left" }
+                  - { label: "Galerija desno od teksta", value: "right" }
+              - label: "Veličina galerije"
+                name: "velicina_galerije"
+                widget: "select"
+                default: "srednja"
+                required: false
+                options:
+                  - { label: "Mala", value: "mala" }
+                  - { label: "Srednja", value: "srednja" }
+                  - { label: "Velika (puna širina)", value: "velika" }
