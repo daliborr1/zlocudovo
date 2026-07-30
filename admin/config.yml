@@ -44,6 +44,7 @@ collections:
             name: "izgled"
             widget: "select"
             default: "top"
+            required: false
             options:
               - { label: "Slika iznad teksta", value: "top" }
               - { label: "Slika levo od teksta", value: "left" }
@@ -119,64 +120,62 @@ collections:
 
   - name: "najave"
     label: "Najave"
-    files:
-      - name: "spisak-najave"
-        label: "Spisak najava"
-        file: "data/najave.json"
+    folder: "content/najave"
+    create: true
+    slug: "{{slug}}"
+    identifier_field: "naslov"
+    summary: "{{naslov}}"
+    extension: "json"
+    format: "json"
+    fields:
+      - label: "Prikaži na sajtu"
+        name: "aktivna"
+        widget: "boolean"
+        default: false
+        hint: "Uključi samo za JEDNU najavu — ta će se prikazivati u odeljku „Najave” na sajtu."
+      - label: "Naslov"
+        name: "naslov"
+        widget: "string"
+        default: "Sledeća akcija"
+      - label: "Tekst"
+        name: "tekst"
+        widget: "markdown"
+        hint: "Podebljano, kurziv, naslovi, liste, citat, linkovi. Prazan red pravi novi pasus."
+        buttons: ["bold", "italic", "link", "heading-two", "heading-three", "quote", "bulleted-list", "numbered-list"]
+      - label: "Glavna slika"
+        name: "glavna_slika"
+        widget: "object"
+        collapsed: true
+        required: false
+        summary: "{{fields.izgled}}"
         fields:
-          - label: "Najave"
-            name: "najave"
-            widget: "list"
-            label_singular: "Najava"
-            summary: "{{naslov}}"
-            fields:
-              - label: "Prikaži na sajtu"
-                name: "aktivna"
-                widget: "boolean"
-                default: false
-                hint: "Uključi samo za JEDNU najavu — ta će se prikazivati u odeljku „Najave” na sajtu."
-              - label: "Naslov"
-                name: "naslov"
-                widget: "string"
-                default: "Sledeća akcija"
-              - label: "Tekst"
-                name: "tekst"
-                widget: "markdown"
-                hint: "Podebljano, kurziv, naslovi, liste, citat, linkovi. Prazan red pravi novi pasus."
-                buttons: ["bold", "italic", "link", "heading-two", "heading-three", "quote", "bulleted-list", "numbered-list"]
-              - label: "Glavna slika"
-                name: "glavna_slika"
-                widget: "object"
-                collapsed: true
-                required: false
-                summary: "{{fields.izgled}}"
-                fields:
-                  - label: "Raspored"
-                    name: "izgled"
-                    widget: "select"
-                    default: "top"
-                    options:
-                      - { label: "Slika iznad teksta", value: "top" }
-                      - { label: "Slika levo od teksta", value: "left" }
-                      - { label: "Slika desno od teksta", value: "right" }
-                      - { label: "Bez slike", value: "none" }
-                  - label: "Slika"
-                    name: "slika"
-                    widget: "image"
-                    required: false
-                  - label: "Veličina"
-                    name: "velicina_slike"
-                    widget: "select"
-                    default: "srednja"
-                    required: false
-                    options:
-                      - { label: "Mala", value: "mala" }
-                      - { label: "Srednja", value: "srednja" }
-                      - { label: "Velika (puna širina)", value: "velika" }
-                  - label: "Opis slike"
-                    name: "opis_slike"
-                    widget: "markdown"
-                    required: false
-                    hint: "Kratak tekst ispod slike (opciono)"
-                    buttons: ["bold", "italic", "link"]
-                    modes: ["rich_text"]
+          - label: "Raspored"
+            name: "izgled"
+            widget: "select"
+            default: "top"
+            required: false
+            options:
+              - { label: "Slika iznad teksta", value: "top" }
+              - { label: "Slika levo od teksta", value: "left" }
+              - { label: "Slika desno od teksta", value: "right" }
+              - { label: "Bez slike", value: "none" }
+          - label: "Slika"
+            name: "slika"
+            widget: "image"
+            required: false
+          - label: "Veličina"
+            name: "velicina_slike"
+            widget: "select"
+            default: "srednja"
+            required: false
+            options:
+              - { label: "Mala", value: "mala" }
+              - { label: "Srednja", value: "srednja" }
+              - { label: "Velika (puna širina)", value: "velika" }
+          - label: "Opis slike"
+            name: "opis_slike"
+            widget: "markdown"
+            required: false
+            hint: "Kratak tekst ispod slike (opciono)"
+            buttons: ["bold", "italic", "link"]
+            modes: ["rich_text"]

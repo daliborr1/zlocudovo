@@ -2,4 +2,4 @@
   publish = "."
 
 [[plugins]]
-  package = "./netlify/plugins/akcije-index"
+  package = "./netlify/plugins/content-index"

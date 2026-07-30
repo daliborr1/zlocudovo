@@ -14,33 +14,23 @@
     }
   });
 
-  var NajavePreview = createClass({
+  // "najave" je sad takodje folder kolekcija (jedan fajl po najavi) - isti
+  // princip kao za akcije, jedan entry = jedna najava.
+  var NajavaPreview = createClass({
     render: function(){
       var entry = this.props.entry;
-      var list = entry.getIn(['data', 'najave']);
-      var items = list ? list.toJS() : [];
-
-      if(!items.length){
-        return h('div', { className: 'preview-empty' }, 'Nema unetih najava.');
-      }
-
-      var html = items.map(function(item, i){
-        var flag = item.aktivna ? ' — AKTIVNA (prikazuje se na sajtu)' : '';
-        var body = Z ? Z.renderNajavaHtml(item) : '';
-        return '<div class="preview-item-label">Najava #' + (i + 1) + flag + '</div>' +
-          '<div class="fact-plank">' + body + '</div>';
-      }).join('<hr class="preview-sep">');
-
+      var data = entry.get('data');
+      var item = data ? data.toJS() : {};
+      var flag = item.aktivna ? ' — AKTIVNA (prikazuje se na sajtu)' : ' — nije aktivna (podrazumevana poruka ostaje na sajtu)';
+      var body = Z ? Z.renderNajavaHtml(item) : '';
+      var html = '<div class="preview-item-label">Najava' + flag + '</div><div class="fact-plank">' + body + '</div>';
       return h('div', { className: 'preview-wrap', dangerouslySetInnerHTML: { __html: html } });
     }
   });
 
-  // "akcije" (folder kolekcija) registruje se po imenu kolekcije.
-  // "najave" (files kolekcija) i dalje po imenu fajla - Decap CMS ima poznat
-  // bag gde registerPreviewTemplate ne radi kad se registruje po imenu
-  // "files" kolekcije, samo po imenu pojedinacnog fajla unutar nje.
+  // Obe su folder kolekcije, pa se registruju po imenu kolekcije direktno.
   CMS.registerPreviewTemplate('akcije', AkcijaPreview);
-  CMS.registerPreviewTemplate('spisak-najave', NajavePreview);
+  CMS.registerPreviewTemplate('najave', NajavaPreview);
 
   CMS.registerPreviewStyle('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=Work+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap');
   CMS.registerPreviewStyle('/akcije/akcija.css');
