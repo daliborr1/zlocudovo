@@ -1,9 +1,3 @@
 {
-  "najave": [
-    {
-      "aktivna": true,
-      "naslov": "Sledeća akcija",
-      "tekst": "Test najave"
-    }
-  ]
+  "najave": []
 }
