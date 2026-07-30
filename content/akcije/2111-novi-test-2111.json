@@ -1,0 +1,14 @@
+{
+  "glavna_slika": {
+    "izgled": "top",
+    "velicina_slike": "srednja"
+  },
+  "galerija_grupa": {
+    "izgled_galerije": "top",
+    "velicina_galerije": "srednja"
+  },
+  "godina": "2111",
+  "naslov": "novi test 2111",
+  "opis": "kratak opis",
+  "tekst": "2111 2111"
+}
