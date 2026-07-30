@@ -61,7 +61,7 @@
     .nav-toggle{ display:flex; }
   }
 
-  .hero{ position:relative; background:var(--walnut); color:var(--cream); padding:96px 32px 64px; overflow:hidden; }
+  .hero{ position:relative; background:var(--walnut); color:var(--cream); padding:72px 32px; overflow:hidden; }
   .hero::before{
     content:""; position:absolute; inset:0;
     background:
@@ -140,7 +140,7 @@
   .timeline{ list-style:none; margin:0; padding:0; border-left:2px solid rgba(43,32,21,0.2); }
   .timeline li{ position:relative; padding:0 0 18px 26px; }
   .timeline li:last-child{ padding-bottom:0; }
-  .timeline li::before{ content:""; position:absolute; left:-5px; top:17px; width:12px; height:12px; border-radius:50%; background:var(--tc, var(--rust)); border:2px solid var(--cream); box-shadow:0 0 0 1px rgba(43,32,21,0.25); z-index:1; }
+  .timeline li::before{ content:""; position:absolute; box-sizing:border-box; left:-5.5px; top:17px; width:12px; height:12px; border-radius:50%; background:var(--tc, var(--rust)); box-shadow:0 0 0 2px var(--cream), 0 0 0 3px rgba(43,32,21,0.25); z-index:2; }
   .timeline .yr{ font-family:var(--font-mono); font-size:0.78rem; color:var(--tc, var(--rust)); display:block; margin-bottom:4px; }
   .timeline h4{ font-family:var(--font-display); font-size:1.1rem; margin:0 0 6px; }
   .timeline p{ margin:0; font-size:0.9rem; color:rgba(34,25,19,0.8); max-width:48ch; }
@@ -263,12 +263,12 @@
 <a href="#main-content" class="skip-link">Preskoči na sadržaj</a>
 
 <header class="nav">
-  <div class="nav-mark">Злоћудово <span>·</span> Zloćudovo</div>
+  <div class="nav-mark">Zloćudovo</div>
   <nav class="nav-links" id="navLinks">
     <a href="#o-selu">O selu</a>
     <a href="#stanovnistvo">Stanovništvo</a>
     <a href="#familija">Familija</a>
-    <a href="#akcije">Galerija</a>
+    <a href="#akcije">Akcije</a>
     <a href="#najave">Najave</a>
     <a href="#industrija">Privreda</a>
     <a href="#lokacija">Lokacija</a>
@@ -279,7 +279,7 @@
   </button>
 </header>
 
-<section class="hero" id="main-content" tabindex="-1" style="padding-bottom:0; max-width:none;">
+<section class="hero" id="main-content" tabindex="-1" style="max-width:none;">
   <div class="hero-inner">
     <div class="hero-col">
       <p class="eyebrow">Jablanički okrug — grad Leskovac</p>
