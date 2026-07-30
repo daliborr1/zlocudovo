@@ -13,6 +13,20 @@
       "naslov": "proba nacrt",
       "opis": "123",
       "tekst": "123"
+    },
+    {
+      "glavna_slika": {
+        "izgled": "top",
+        "velicina_slike": "srednja"
+      },
+      "galerija_grupa": {
+        "izgled_galerije": "top",
+        "velicina_galerije": "srednja"
+      },
+      "godina": "2039",
+      "naslov": "test",
+      "opis": "123",
+      "tekst": "123"
     }
   ]
 }
