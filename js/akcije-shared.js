@@ -45,6 +45,13 @@ window.ZlocudovoAkcije = (function(){
     return s;
   }
 
+  // Samo inline formatiranje (bez pasusa/naslova/liste) - za kratka polja
+  // kao sto su "kratak opis" i natpisi ispod slike/galerije, koja se vec
+  // nalaze unutar svog <p> taga pa ne treba im blok-nivo markdown.
+  function renderInline(raw){
+    return inlineMd(escapeHtml(String(raw || '')));
+  }
+
   function renderMarkdown(raw){
     var text = String(raw || '').replace(/\r\n/g, '\n');
     var blocks = text.split(/\n{2,}/)
@@ -106,15 +113,18 @@ window.ZlocudovoAkcije = (function(){
     }
 
     function captionHtml(text){
-      return text ? '<p class="slideshow-note">' + escapeHtml(text) + '</p>' : '';
+      return text ? '<p class="slideshow-note">' + renderInline(text) + '</p>' : '';
     }
 
-    var imgInner = item.slika
-      ? '<img class="akcija-hero-img" src="' + escapeHtml(item.slika) + '" alt="' + escapeHtml(item.naslov) + '">' + captionHtml(item.opis_slike)
+    var slikaG = item.glavna_slika || {};
+    var galG = item.galerija_grupa || {};
+
+    var imgInner = slikaG.slika
+      ? '<img class="akcija-hero-img" src="' + escapeHtml(slikaG.slika) + '" alt="' + escapeHtml(item.naslov) + '">' + captionHtml(slikaG.opis_slike)
       : '';
 
-    var galerija = Array.isArray(item.galerija)
-      ? item.galerija.map(function(g){ return typeof g === 'string' ? g : (g && g.slika); }).filter(Boolean)
+    var galerija = Array.isArray(galG.galerija)
+      ? galG.galerija.map(function(g){ return typeof g === 'string' ? g : (g && g.slika); }).filter(Boolean)
       : [];
     var galleryInner = '';
     if(galerija.length){
@@ -126,11 +136,11 @@ window.ZlocudovoAkcije = (function(){
           '<button type="button" class="slide-nav next" aria-label="Sledeća slika">›</button>' +
           '<div class="slide-dots"></div>'
         : '';
-      galleryInner = '<div class="slideshow" id="' + slideId + '">' + slides + controls + '</div>' + captionHtml(item.opis_galerije);
+      galleryInner = '<div class="slideshow" id="' + slideId + '">' + slides + controls + '</div>' + captionHtml(galG.opis_galerije);
     }
 
-    var izgled = item.izgled || 'top';
-    var izgledG = item.izgled_galerije || 'top';
+    var izgled = slikaG.izgled || 'top';
+    var izgledG = galG.izgled_galerije || 'top';
     var textHtml = renderMarkdown(item.tekst);
 
     var pre = [];
@@ -138,27 +148,27 @@ window.ZlocudovoAkcije = (function(){
     var rowUsed = false;
 
     if(imgInner && (izgled === 'left' || izgled === 'right')){
-      textHtml = mediaRow(izgled, item.velicina_slike, imgInner, textHtml);
+      textHtml = mediaRow(izgled, slikaG.velicina_slike, imgInner, textHtml);
       rowUsed = true;
     } else if(imgInner && izgled === 'top'){
-      pre.push(mediaBlock(item.velicina_slike, imgInner));
+      pre.push(mediaBlock(slikaG.velicina_slike, imgInner));
     }
 
     if(galleryInner){
       if(!rowUsed && (izgledG === 'left' || izgledG === 'right')){
-        textHtml = mediaRow(izgledG, item.velicina_galerije, galleryInner, textHtml);
+        textHtml = mediaRow(izgledG, galG.velicina_galerije, galleryInner, textHtml);
         rowUsed = true;
       } else if(izgledG === 'end'){
-        post.push(mediaBlock(item.velicina_galerije, galleryInner, 'akcija-gallery pos-end'));
+        post.push(mediaBlock(galG.velicina_galerije, galleryInner, 'akcija-gallery pos-end'));
       } else {
-        pre.push(mediaBlock(item.velicina_galerije, galleryInner, 'akcija-gallery'));
+        pre.push(mediaBlock(galG.velicina_galerije, galleryInner, 'akcija-gallery'));
       }
     }
 
     return '<section class="akcija-hero"><div class="akcija-hero-inner">' +
         '<span class="yr">' + escapeHtml(item.godina) + '</span>' +
         '<h1>' + escapeHtml(item.naslov) + '</h1>' +
-        '<p class="lede">' + escapeHtml(item.opis || '') + '</p>' +
+        '<p class="lede">' + renderInline(item.opis || '') + '</p>' +
       '</div></section>' +
       '<article class="akcija-body">' +
         pre.join('') +
@@ -173,6 +183,7 @@ window.ZlocudovoAkcije = (function(){
     slugFor: slugFor,
     fetchAkcije: fetchAkcije,
     renderMarkdown: renderMarkdown,
+    renderInline: renderInline,
     renderAkcijaHtml: renderAkcijaHtml
   };
 })();

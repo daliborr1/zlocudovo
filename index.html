@@ -859,7 +859,7 @@ window.initTimelineCollapse = function(){
         '<a class="akcija-box" href="akcije/prikaz.html?slug=' + encodeURIComponent(slug) + '">' +
           '<span class="yr">' + Z.escapeHtml(item.godina) + '</span>' +
           '<h4>' + Z.escapeHtml(item.naslov) + '</h4>' +
-          '<p>' + Z.escapeHtml(item.opis || '') + '</p>' +
+          '<p>' + Z.renderInline(item.opis || '') + '</p>' +
           '<span class="akcija-more">Pročitaj više →</span>' +
         '</a>';
       return { godina: item.godina, node: li };
