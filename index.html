@@ -727,7 +727,7 @@
   }
 })();
 
-(function(){
+window.initTimelineCollapse = function(){
   var wrap = document.getElementById('timelineWrap');
   var fadeBox = document.getElementById('timelineFadeBox');
   var extra = document.getElementById('timelineExtra');
@@ -779,7 +779,7 @@
   btn.addEventListener('click', function(){
     if(expanded){ collapse(); } else { expand(); }
   });
-})();
+};
 
 (function(){
   var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -830,16 +830,24 @@
 <script>
 (function(){
   var mainList = document.getElementById('timelineMain');
+  var extraList = document.getElementById('timelineExtra');
   var Z = window.ZlocudovoAkcije;
-  if(!mainList || !Z) return;
-  Z.fetchAkcije().then(function(items){
-    if(!items.length) return;
-    var colors = ['var(--river)', 'var(--rust)', 'var(--leaf)'];
-    var existing = Array.prototype.map.call(mainList.querySelectorAll('li'), function(li){
+  if(!mainList || !extraList) return;
+
+  var VISIBLE_COUNT = 3;
+  var colors = ['var(--river)', 'var(--rust)', 'var(--leaf)'];
+
+  function collectStatic(list){
+    return Array.prototype.map.call(list.querySelectorAll('li'), function(li){
       var yr = li.querySelector('.yr');
+      li.classList.remove('timeline-hidden');
       return { godina: yr ? yr.textContent : '0', node: li };
     });
-    var dyn = items.map(function(item, i){
+  }
+
+  function render(items){
+    var staticEntries = collectStatic(mainList).concat(collectStatic(extraList));
+    var dynEntries = items.map(function(item, i){
       var li = document.createElement('li');
       li.style.setProperty('--tc', colors[i % colors.length]);
       var slug = Z.slugFor(item);
@@ -852,10 +860,30 @@
         '</a>';
       return { godina: item.godina, node: li };
     });
-    existing.concat(dyn)
-      .sort(function(a, b){ return parseInt(b.godina, 10) - parseInt(a.godina, 10); })
-      .forEach(function(entry){ mainList.appendChild(entry.node); });
-  });
+
+    var all = staticEntries.concat(dynEntries).sort(function(a, b){
+      return parseInt(b.godina, 10) - parseInt(a.godina, 10);
+    });
+
+    mainList.innerHTML = '';
+    extraList.innerHTML = '';
+    all.forEach(function(entry, i){
+      if(i < VISIBLE_COUNT){
+        mainList.appendChild(entry.node);
+      } else {
+        entry.node.classList.add('timeline-hidden');
+        extraList.appendChild(entry.node);
+      }
+    });
+
+    if(window.initTimelineCollapse) window.initTimelineCollapse();
+  }
+
+  if(Z){
+    Z.fetchAkcije().then(function(items){ render(items || []); });
+  } else {
+    render([]);
+  }
 })();
 </script>
 

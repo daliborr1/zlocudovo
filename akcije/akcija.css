@@ -63,17 +63,39 @@ footer{ text-align:center; padding:28px 32px; font-family:var(--font-mono); font
 .akcija-hero-img{ display:block; width:100%; height:auto; }
 .akcija-loading{ padding:56px 32px; text-align:center; font-family:var(--font-mono); color:rgba(34,25,19,0.6); }
 
-.akcija-media{ margin:0 0 24px; }
-.akcija-media.pos-top{ clear:both; }
-.akcija-media.pos-left{ float:left; margin:4px 24px 16px 0; }
-.akcija-media.pos-right{ float:right; margin:4px 0 16px 24px; }
-.akcija-media.size-mala{ width:220px; max-width:45%; }
-.akcija-media.size-srednja{ width:380px; max-width:60%; }
-.akcija-media.size-velika{ width:100%; max-width:100%; }
-.akcija-media.pos-top.size-mala, .akcija-media.pos-top.size-srednja{ max-width:100%; }
-.akcija-clear{ clear:both; }
+/* Samostalan blok medija (raspored: iznad / bez / na kraju teksta) */
+.akcija-media-block{ margin:0 0 24px; }
+.akcija-media-block.size-mala{ max-width:220px; }
+.akcija-media-block.size-srednja{ max-width:420px; }
+.akcija-media-block.size-velika{ max-width:100%; }
 
-.akcija-media .slideshow{ width:100%; }
+/* Medij uz tekst (raspored: levo / desno) — eksplicitan grid, nema dvosmislenosti oko strane */
+.akcija-media-row{
+  display:grid;
+  grid-template-columns: 320px 1fr;
+  grid-template-areas: "media text";
+  gap:28px;
+  align-items:start;
+  margin:0 0 24px;
+}
+.akcija-media-row.pos-right{
+  grid-template-columns: 1fr 320px;
+  grid-template-areas: "text media";
+}
+.akcija-media-row.size-mala{ grid-template-columns: 200px 1fr; }
+.akcija-media-row.pos-right.size-mala{ grid-template-columns: 1fr 200px; }
+.akcija-media-row.size-velika{ grid-template-columns: 480px 1fr; }
+.akcija-media-row.pos-right.size-velika{ grid-template-columns: 1fr 480px; }
+.akcija-media-row .akcija-media-slot{ grid-area:media; min-width:0; }
+.akcija-media-row .akcija-text-slot{ grid-area:text; min-width:0; }
+@media (max-width:700px){
+  .akcija-media-row, .akcija-media-row.pos-right, .akcija-media-row.size-mala, .akcija-media-row.size-velika{
+    grid-template-columns: 1fr;
+    grid-template-areas: "media" "text";
+  }
+}
+
+.akcija-media-block .slideshow, .akcija-media-row .slideshow{ width:100%; }
 
 .slideshow{ position:relative; background:var(--walnut); aspect-ratio:4/3; overflow:hidden; }
 .slideshow .slide{ position:absolute; inset:0; opacity:0; transition:opacity .8s ease; }

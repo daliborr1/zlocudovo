@@ -61,23 +61,26 @@
     }
     document.title = item.naslov + ' (' + item.godina + ') — Zloćudovo';
 
-    function mediaWrapper(pos, velicina, inner, extraClass){
-      var p = (pos === 'left' || pos === 'right') ? pos : 'top';
-      var v = (velicina === 'mala' || velicina === 'velika') ? velicina : 'srednja';
-      return '<div class="akcija-media pos-' + p + ' size-' + v + (extraClass ? ' ' + extraClass : '') + '">' + inner + '</div>';
+    function sizeClass(v){ return (v === 'mala' || v === 'velika') ? v : 'srednja'; }
+
+    function mediaBlock(velicina, inner, extraClass){
+      return '<div class="akcija-media-block size-' + sizeClass(velicina) + (extraClass ? ' ' + extraClass : '') + '">' + inner + '</div>';
     }
 
-    var imgHtml = '';
-    if(item.slika && item.izgled !== 'none'){
-      imgHtml = mediaWrapper(
-        item.izgled,
-        item.velicina_slike,
-        '<img class="akcija-hero-img" src="' + Z.escapeHtml(item.slika) + '" alt="' + Z.escapeHtml(item.naslov) + '">'
-      );
+    function mediaRow(pos, velicina, mediaInner, textHtml){
+      var p = (pos === 'right') ? 'right' : 'left';
+      return '<div class="akcija-media-row pos-' + p + ' size-' + sizeClass(velicina) + '">' +
+        '<div class="akcija-media-slot">' + mediaInner + '</div>' +
+        '<div class="akcija-text-slot">' + textHtml + '</div>' +
+      '</div>';
     }
+
+    var imgInner = item.slika
+      ? '<img class="akcija-hero-img" src="' + Z.escapeHtml(item.slika) + '" alt="' + Z.escapeHtml(item.naslov) + '">'
+      : '';
 
     var galerija = Array.isArray(item.galerija) ? item.galerija.filter(Boolean) : [];
-    var galleryHtml = '';
+    var galleryInner = '';
     if(galerija.length){
       var slides = galerija.map(function(src, i){
         return '<div class="slide' + (i === 0 ? ' active' : '') + '"><img src="' + Z.escapeHtml(src) + '" alt="' + Z.escapeHtml(item.naslov) + '"></div>';
@@ -87,11 +90,34 @@
           '<button type="button" class="slide-nav next" aria-label="Sledeća slika">›</button>' +
           '<div class="slide-dots"></div>'
         : '';
-      galleryHtml = mediaWrapper(
-        item.izgled_galerije,
-        item.velicina_galerije,
-        '<div class="slideshow" id="akcijaSlideshow">' + slides + controls + '</div>'
-      );
+      galleryInner = '<div class="slideshow" id="akcijaSlideshow">' + slides + controls + '</div>';
+    }
+
+    var izgled = item.izgled || 'top';
+    var izgledG = item.izgled_galerije || 'top';
+    var textHtml = paragraphs(item.tekst);
+
+    var pre = [];   // blokovi pre teksta
+    var post = [];  // blokovi posle teksta (npr. galerija na kraju)
+    var rowUsed = false;
+
+    if(imgInner && (izgled === 'left' || izgled === 'right')){
+      textHtml = mediaRow(izgled, item.velicina_slike, imgInner, textHtml);
+      rowUsed = true;
+    } else if(imgInner && izgled === 'top'){
+      pre.push(mediaBlock(item.velicina_slike, imgInner));
+    }
+    // izgled === 'none' -> slika se ne prikazuje
+
+    if(galleryInner){
+      if(!rowUsed && (izgledG === 'left' || izgledG === 'right')){
+        textHtml = mediaRow(izgledG, item.velicina_galerije, galleryInner, textHtml);
+        rowUsed = true;
+      } else if(izgledG === 'end'){
+        post.push(mediaBlock(item.velicina_galerije, galleryInner, 'akcija-gallery'));
+      } else {
+        pre.push(mediaBlock(item.velicina_galerije, galleryInner, 'akcija-gallery'));
+      }
     }
 
     el.innerHTML =
@@ -101,10 +127,9 @@
         '<p class="lede">' + Z.escapeHtml(item.opis || '') + '</p>' +
       '</div></section>' +
       '<article class="akcija-body">' +
-        imgHtml +
-        galleryHtml +
-        paragraphs(item.tekst) +
-        '<div class="akcija-clear"></div>' +
+        pre.join('') +
+        textHtml +
+        post.join('') +
         '<div class="akcija-nav-between"><a href="../index.html#akcije">← Sve akcije</a></div>' +
       '</article>';
 

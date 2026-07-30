@@ -78,6 +78,7 @@ collections:
                   - { label: "Galerija iznad teksta", value: "top" }
                   - { label: "Galerija levo od teksta", value: "left" }
                   - { label: "Galerija desno od teksta", value: "right" }
+                  - { label: "Galerija na kraju teksta", value: "end" }
               - label: "Veličina galerije"
                 name: "velicina_galerije"
                 widget: "select"
