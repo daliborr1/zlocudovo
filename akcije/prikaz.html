@@ -75,11 +75,17 @@
       '</div>';
     }
 
+    function captionHtml(text){
+      return text ? '<p class="slideshow-note">' + Z.escapeHtml(text) + '</p>' : '';
+    }
+
     var imgInner = item.slika
-      ? '<img class="akcija-hero-img" src="' + Z.escapeHtml(item.slika) + '" alt="' + Z.escapeHtml(item.naslov) + '">'
+      ? '<img class="akcija-hero-img" src="' + Z.escapeHtml(item.slika) + '" alt="' + Z.escapeHtml(item.naslov) + '">' + captionHtml(item.opis_slike)
       : '';
 
-    var galerija = Array.isArray(item.galerija) ? item.galerija.filter(Boolean) : [];
+    var galerija = Array.isArray(item.galerija)
+      ? item.galerija.map(function(g){ return typeof g === 'string' ? g : (g && g.slika); }).filter(Boolean)
+      : [];
     var galleryInner = '';
     if(galerija.length){
       var slides = galerija.map(function(src, i){
@@ -90,7 +96,7 @@
           '<button type="button" class="slide-nav next" aria-label="Sledeća slika">›</button>' +
           '<div class="slide-dots"></div>'
         : '';
-      galleryInner = '<div class="slideshow" id="akcijaSlideshow">' + slides + controls + '</div>';
+      galleryInner = '<div class="slideshow" id="akcijaSlideshow">' + slides + controls + '</div>' + captionHtml(item.opis_galerije);
     }
 
     var izgled = item.izgled || 'top';
@@ -114,7 +120,7 @@
         textHtml = mediaRow(izgledG, item.velicina_galerije, galleryInner, textHtml);
         rowUsed = true;
       } else if(izgledG === 'end'){
-        post.push(mediaBlock(item.velicina_galerije, galleryInner, 'akcija-gallery'));
+        post.push(mediaBlock(item.velicina_galerije, galleryInner, 'akcija-gallery pos-end'));
       } else {
         pre.push(mediaBlock(item.velicina_galerije, galleryInner, 'akcija-gallery'));
       }

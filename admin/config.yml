@@ -56,19 +56,22 @@ collections:
                   - { label: "Mala", value: "mala" }
                   - { label: "Srednja", value: "srednja" }
                   - { label: "Velika (puna širina)", value: "velika" }
+              - label: "Opis slike"
+                name: "opis_slike"
+                widget: "string"
+                required: false
+                hint: "Kratak tekst ispod glavne slike (opciono)"
               - label: "Tekst"
                 name: "tekst"
                 widget: "text"
                 hint: "Pun tekst akcije. Prazan red između redova pravi novi pasus."
               - label: "Galerija (slajd šou, opciono)"
                 name: "galerija"
-                widget: "image"
+                widget: "list"
                 required: false
-                hint: "Klikni 'Choose an image', pa u galeriji medija drži Ctrl (ili Cmd na Mac-u) i klikni da izabereš više slika odjednom — isto tako možeš i da uploaduješ više fajlova odjednom. 2+ slike prikazuju se kao slajd šou."
-                media_library:
-                  config:
-                    multiple: true
-                    max_files: 20
+                hint: "Dodaj 2 ili više slika (dugme 'Dodaj' za svaku) da bi se prikazao slajd šou."
+                fields:
+                  - { label: "Slika", name: "slika", widget: "image" }
               - label: "Raspored galerije"
                 name: "izgled_galerije"
                 widget: "select"
@@ -88,3 +91,34 @@ collections:
                   - { label: "Mala", value: "mala" }
                   - { label: "Srednja", value: "srednja" }
                   - { label: "Velika (puna širina)", value: "velika" }
+              - label: "Opis galerije"
+                name: "opis_galerije"
+                widget: "string"
+                required: false
+                hint: "Kratak tekst ispod galerije/slajd šoua (opciono)"
+
+  - name: "najave"
+    label: "Najave"
+    files:
+      - name: "spisak"
+        label: "Spisak najava"
+        file: "data/najave.json"
+        fields:
+          - label: "Najave"
+            name: "najave"
+            widget: "list"
+            label_singular: "Najava"
+            summary: "{{naslov}}"
+            fields:
+              - label: "Prikaži na sajtu"
+                name: "aktivna"
+                widget: "boolean"
+                default: false
+                hint: "Uključi samo za JEDNU najavu — ta će se prikazivati u odeljku „Najave” na sajtu."
+              - label: "Naslov"
+                name: "naslov"
+                widget: "string"
+                default: "Sledeća akcija"
+              - label: "Tekst"
+                name: "tekst"
+                widget: "text"

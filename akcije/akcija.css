@@ -68,6 +68,9 @@ footer{ text-align:center; padding:28px 32px; font-family:var(--font-mono); font
 .akcija-media-block.size-mala{ max-width:220px; }
 .akcija-media-block.size-srednja{ max-width:420px; }
 .akcija-media-block.size-velika{ max-width:100%; }
+.akcija-media-block.pos-end{ margin-left:auto; margin-right:auto; }
+
+.slideshow-note{ font-family:var(--font-mono); font-size:0.72rem; color:rgba(43,32,21,0.6); margin:10px 0 0; }
 
 /* Medij uz tekst (raspored: levo / desno) — eksplicitan grid, nema dvosmislenosti oko strane */
 .akcija-media-row{

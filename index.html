@@ -534,8 +534,8 @@
 <section id="najave">
   <div class="section-head"><span class="tag" style="color:var(--river)">05</span><h2>Najave</h2></div>
   <div class="fact-plank" style="border-left-color:var(--river)">
-    <b>Sledeća akcija</b>
-    Datum i detalji sledećeg humanitarnog turnira ili akcije pošumljavanja biće objavljeni ovde čim se potvrde. Za najsvežije vesti pratite <a href="https://www.instagram.com/zlocudovo/" target="_blank" rel="noopener" style="color:var(--river); border-bottom:1px solid var(--river);">Instagram @zlocudovo</a>.
+    <b id="najavaNaslov">Sledeća akcija</b>
+    <span id="najavaTekst">Datum i detalji sledećeg humanitarnog turnira ili akcije pošumljavanja biće objavljeni ovde čim se potvrde. Za najsvežije vesti pratite <a href="https://www.instagram.com/zlocudovo/" target="_blank" rel="noopener" style="color:var(--river); border-bottom:1px solid var(--river);">Instagram @zlocudovo</a>.</span>
   </div>
 </section>
 
@@ -884,6 +884,23 @@ window.initTimelineCollapse = function(){
   } else {
     render([]);
   }
+})();
+</script>
+
+<script>
+(function(){
+  fetch('/data/najave.json', { cache: 'no-store' })
+    .then(function(r){ return r.ok ? r.json() : { najave: [] }; })
+    .then(function(data){
+      var list = (data && data.najave) ? data.najave : [];
+      var active = list.filter(function(n){ return n && n.aktivna; })[0];
+      if(!active) return;
+      var naslovEl = document.getElementById('najavaNaslov');
+      var tekstEl = document.getElementById('najavaTekst');
+      if(naslovEl) naslovEl.textContent = active.naslov || 'Sledeća akcija';
+      if(tekstEl) tekstEl.textContent = active.tekst || '';
+    })
+    .catch(function(){});
 })();
 </script>
 
