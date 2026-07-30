@@ -11,7 +11,7 @@ collections:
   - name: "akcije"
     label: "Akcije"
     files:
-      - name: "spisak"
+      - name: "spisak-akcija"
         label: "Spisak akcija"
         file: "data/akcije.json"
         fields:
@@ -121,7 +121,7 @@ collections:
   - name: "najave"
     label: "Najave"
     files:
-      - name: "spisak"
+      - name: "spisak-najave"
         label: "Spisak najava"
         file: "data/najave.json"
         fields:

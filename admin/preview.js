@@ -46,8 +46,11 @@
     }
   });
 
-  CMS.registerPreviewTemplate('akcije', AkcijePreview);
-  CMS.registerPreviewTemplate('najave', NajavePreview);
+  // Registruje se po imenu FAJLA (ne kolekcije) - Decap CMS ima poznat bag
+  // gde registerPreviewTemplate ne radi kad se registruje po imenu "files"
+  // kolekcije, samo po imenu pojedinacnog fajla unutar nje.
+  CMS.registerPreviewTemplate('spisak-akcija', AkcijePreview);
+  CMS.registerPreviewTemplate('spisak-najave', NajavePreview);
 
   CMS.registerPreviewStyle('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=Work+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap');
   CMS.registerPreviewStyle('/akcije/akcija.css');
