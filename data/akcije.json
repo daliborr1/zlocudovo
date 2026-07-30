@@ -44,7 +44,26 @@
       "velicina_slike": "srednja",
       "naslov": "testtt 2027",
       "izgled": "right",
+      "opis_slike": "opis slike",
       "tekst": "cjajcnkcnjks\nacscacasc\nasdc\ns\\zhdfh\nfhj\nfh\nf\nhz\nh\nfh\nfjffhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh",
+      "velicina_galerije": "srednja"
+    },
+    {
+      "godina": "2028",
+      "galerija": [
+        "/images/uploads/123.jpg",
+        "/images/uploads/familija.jpg",
+        "/images/uploads/1e.jpg"
+      ],
+      "slika": "/images/uploads/familija.jpg",
+      "opis": "2028 testtt\nad\na\na\na",
+      "izgled_galerije": "end",
+      "velicina_slike": "srednja",
+      "naslov": "test opisa",
+      "izgled": "left",
+      "opis_slike": "opis slike iznad",
+      "opis_galerije": "opis slika iznad",
+      "tekst": "lknfnalnfnalgfag\nargargaga\nadgdfffgdgd\ndfgdg\n\n\n\nd\nfgdgdaddddddddddddddddddddddddddddddfgdfgdfgdfgdgd",
       "velicina_galerije": "srednja"
     }
   ]
