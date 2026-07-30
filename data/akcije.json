@@ -1,3 +1,21 @@
 {
-  "akcije": []
+  "akcije": [
+    {
+      "godina": "2027",
+      "galerija": [
+        "/images/uploads/123.jpg",
+        "/images/uploads/familija.jpg"
+      ],
+      "slika": "/images/uploads/123.jpg",
+      "opis": "test 123",
+      "izgled_galerije": "end",
+      "velicina_slike": "srednja",
+      "naslov": "Test",
+      "izgled": "left",
+      "opis_slike": "opis slike",
+      "opis_galerije": "opis galerije",
+      "tekst": "jbfjskdbjd\nsdfsdfdsfds\nsdfsdfsfsdfsdfs\nsdfsfs",
+      "velicina_galerije": "srednja"
+    }
+  ]
 }
