@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="sr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Akcija — Zloćudovo</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='48' fill='%232b2015'/%3E%3Ccircle cx='50' cy='50' r='30' fill='%23c08a3e'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=Work+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="akcija.css">
+</head>
+<body>
+
+<header class="nav">
+  <div class="nav-mark">Zloćudovo</div>
+  <a class="back-link" href="../index.html#akcije">← Nazad na akcije</a>
+</header>
+
+<div id="sadrzaj">
+  <p class="akcija-loading">Učitavanje…</p>
+</div>
+
+<footer>
+  <p>Zloćudovo · Grad Leskovac · Jablanički okrug</p>
+</footer>
+
+<script src="/js/akcije-shared.js"></script>
+<script>
+(function(){
+  var Z = window.ZlocudovoAkcije;
+  var el = document.getElementById('sadrzaj');
+  var slug = new URLSearchParams(window.location.search).get('slug');
+
+  function paragraphs(text){
+    return String(text || '')
+      .split(/\n\s*\n/)
+      .filter(function(block){ return block.trim().length; })
+      .map(function(block){ return '<p>' + Z.escapeHtml(block.trim()).replace(/\n/g, '<br>') + '</p>'; })
+      .join('');
+  }
+
+  function notFound(){
+    document.title = 'Akcija nije pronađena — Zloćudovo';
+    el.innerHTML =
+      '<section class="akcija-hero"><div class="akcija-hero-inner">' +
+        '<h1>Akcija nije pronađena</h1>' +
+        '<p class="lede"><a href="../index.html#akcije" style="color:inherit">← Nazad na sve akcije</a></p>' +
+      '</div></section>';
+  }
+
+  if(!slug || !Z){
+    notFound();
+    return;
+  }
+
+  Z.fetchAkcije().then(function(items){
+    var item = items.filter(function(it){ return Z.slugFor(it) === slug; })[0];
+    if(!item){
+      notFound();
+      return;
+    }
+    document.title = item.naslov + ' (' + item.godina + ') — Zloćudovo';
+    var img = item.slika
+      ? '<img class="akcija-hero-img" src="' + Z.escapeHtml(item.slika) + '" alt="' + Z.escapeHtml(item.naslov) + '">'
+      : '';
+    el.innerHTML =
+      '<section class="akcija-hero"><div class="akcija-hero-inner">' +
+        '<span class="yr">' + Z.escapeHtml(item.godina) + '</span>' +
+        '<h1>' + Z.escapeHtml(item.naslov) + '</h1>' +
+        '<p class="lede">' + Z.escapeHtml(item.opis || '') + '</p>' +
+      '</div></section>' +
+      '<article class="akcija-body">' +
+        img +
+        paragraphs(item.tekst) +
+        '<div class="akcija-nav-between"><a href="../index.html#akcije">← Sve akcije</a></div>' +
+      '</article>';
+  });
+})();
+</script>
+
+</body>
+</html>

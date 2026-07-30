@@ -461,7 +461,7 @@
   <div class="section-head"><span class="tag" style="color:var(--river)">04</span><h2>Akcije za selo, kroz godine</h2></div>
   <div class="akcije-grid">
     <div class="timeline-wrap collapsed" id="timelineWrap">
-    <ul class="timeline">
+    <ul class="timeline" id="timelineMain">
       <li style="--tc:var(--river)">
         <a class="akcija-box" href="akcije/2025-novi-humanitarni-turnir.html">
           <span class="yr">2025</span>
@@ -813,6 +813,48 @@
     if(!reduce){
       setInterval(function(){ goTo(idx + 1); }, 4500);
     }
+  });
+})();
+</script>
+
+<script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+<script>
+  (function(){
+    if(window.location.hash && /confirmation_token|invite_token|recovery_token/.test(window.location.hash)){
+      window.location.href = '/admin/' + window.location.hash;
+    }
+  })();
+</script>
+
+<script src="/js/akcije-shared.js"></script>
+<script>
+(function(){
+  var mainList = document.getElementById('timelineMain');
+  var Z = window.ZlocudovoAkcije;
+  if(!mainList || !Z) return;
+  Z.fetchAkcije().then(function(items){
+    if(!items.length) return;
+    var colors = ['var(--river)', 'var(--rust)', 'var(--leaf)'];
+    var existing = Array.prototype.map.call(mainList.querySelectorAll('li'), function(li){
+      var yr = li.querySelector('.yr');
+      return { godina: yr ? yr.textContent : '0', node: li };
+    });
+    var dyn = items.map(function(item, i){
+      var li = document.createElement('li');
+      li.style.setProperty('--tc', colors[i % colors.length]);
+      var slug = Z.slugFor(item);
+      li.innerHTML =
+        '<a class="akcija-box" href="akcije/prikaz.html?slug=' + encodeURIComponent(slug) + '">' +
+          '<span class="yr">' + Z.escapeHtml(item.godina) + '</span>' +
+          '<h4>' + Z.escapeHtml(item.naslov) + '</h4>' +
+          '<p>' + Z.escapeHtml(item.opis || '') + '</p>' +
+          '<span class="akcija-more">Pročitaj više →</span>' +
+        '</a>';
+      return { godina: item.godina, node: li };
+    });
+    existing.concat(dyn)
+      .sort(function(a, b){ return parseInt(b.godina, 10) - parseInt(a.godina, 10); })
+      .forEach(function(entry){ mainList.appendChild(entry.node); });
   });
 })();
 </script>

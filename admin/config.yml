@@ -1,0 +1,43 @@
+backend:
+  name: git-gateway
+  branch: master
+
+media_folder: "images/uploads"
+public_folder: "/images/uploads"
+
+locale: "sr"
+
+collections:
+  - name: "akcije"
+    label: "Akcije"
+    files:
+      - name: "spisak"
+        label: "Spisak akcija"
+        file: "data/akcije.json"
+        fields:
+          - label: "Akcije"
+            name: "akcije"
+            widget: "list"
+            label_singular: "Akcija"
+            summary: "{{godina}} — {{naslov}}"
+            fields:
+              - label: "Godina"
+                name: "godina"
+                widget: "string"
+                hint: "Unesi godinu u formatu GGGG, npr. 2026"
+                pattern: ["^[0-9]{4}$", "Godina mora imati tačno 4 cifre, npr. 2026"]
+              - label: "Naslov"
+                name: "naslov"
+                widget: "string"
+              - label: "Kratak opis"
+                name: "opis"
+                widget: "text"
+                hint: "Prikazuje se na kartici na početnoj strani, u okviru vremenske linije"
+              - label: "Slika"
+                name: "slika"
+                widget: "image"
+                required: false
+              - label: "Tekst"
+                name: "tekst"
+                widget: "text"
+                hint: "Pun tekst akcije. Prazan red između redova pravi novi pasus."
