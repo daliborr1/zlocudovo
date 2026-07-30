@@ -33,11 +33,37 @@ collections:
                 name: "opis"
                 widget: "text"
                 hint: "Prikazuje se na kartici na početnoj strani, u okviru vremenske linije"
-              - label: "Slika"
+              - label: "Raspored glavne slike"
+                name: "izgled"
+                widget: "select"
+                default: "top"
+                options:
+                  - { label: "Slika iznad teksta", value: "top" }
+                  - { label: "Slika levo od teksta", value: "left" }
+                  - { label: "Slika desno od teksta", value: "right" }
+                  - { label: "Bez glavne slike", value: "none" }
+              - label: "Glavna slika"
                 name: "slika"
                 widget: "image"
                 required: false
+                hint: "Opciono. Raspored biraš u polju iznad."
+              - label: "Veličina glavne slike"
+                name: "velicina_slike"
+                widget: "select"
+                default: "srednja"
+                required: false
+                options:
+                  - { label: "Mala", value: "mala" }
+                  - { label: "Srednja", value: "srednja" }
+                  - { label: "Velika (puna širina)", value: "velika" }
               - label: "Tekst"
                 name: "tekst"
                 widget: "text"
                 hint: "Pun tekst akcije. Prazan red između redova pravi novi pasus."
+              - label: "Galerija (slajd šou, opciono)"
+                name: "galerija"
+                widget: "list"
+                required: false
+                hint: "Dodaj 2 ili više slika da bi se prikazao slajd šou ispod teksta."
+                fields:
+                  - { label: "Slika", name: "slika", widget: "image" }

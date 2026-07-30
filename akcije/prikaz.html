@@ -60,9 +60,38 @@
       return;
     }
     document.title = item.naslov + ' (' + item.godina + ') — Zloćudovo';
-    var img = item.slika
-      ? '<img class="akcija-hero-img" src="' + Z.escapeHtml(item.slika) + '" alt="' + Z.escapeHtml(item.naslov) + '">'
-      : '';
+
+    var sizeClass = { mala: 'img-size-mala', srednja: 'img-size-srednja', velika: 'img-size-velika' }[item.velicina_slike] || 'img-size-srednja';
+    var izgled = item.izgled || 'top';
+    var telo;
+
+    if(item.slika && (izgled === 'left' || izgled === 'right')){
+      telo =
+        '<div class="akcija-media-row izgled-' + izgled + '">' +
+          '<div class="akcija-media-col ' + sizeClass + '"><img class="akcija-hero-img ' + sizeClass + '" src="' + Z.escapeHtml(item.slika) + '" alt="' + Z.escapeHtml(item.naslov) + '"></div>' +
+          '<div class="akcija-text-col">' + paragraphs(item.tekst) + '</div>' +
+        '</div>';
+    } else {
+      var img = (item.slika && izgled !== 'none')
+        ? '<img class="akcija-hero-img ' + sizeClass + '" src="' + Z.escapeHtml(item.slika) + '" alt="' + Z.escapeHtml(item.naslov) + '">'
+        : '';
+      telo = img + paragraphs(item.tekst);
+    }
+
+    var galerija = Array.isArray(item.galerija) ? item.galerija.filter(function(g){ return g && g.slika; }) : [];
+    var galleryHtml = '';
+    if(galerija.length){
+      var slides = galerija.map(function(g, i){
+        return '<div class="slide' + (i === 0 ? ' active' : '') + '"><img src="' + Z.escapeHtml(g.slika) + '" alt="' + Z.escapeHtml(item.naslov) + '"></div>';
+      }).join('');
+      var controls = galerija.length > 1
+        ? '<button type="button" class="slide-nav prev" aria-label="Prethodna slika">‹</button>' +
+          '<button type="button" class="slide-nav next" aria-label="Sledeća slika">›</button>' +
+          '<div class="slide-dots"></div>'
+        : '';
+      galleryHtml = '<div class="akcija-gallery"><div class="slideshow" id="akcijaSlideshow">' + slides + controls + '</div></div>';
+    }
+
     el.innerHTML =
       '<section class="akcija-hero"><div class="akcija-hero-inner">' +
         '<span class="yr">' + Z.escapeHtml(item.godina) + '</span>' +
@@ -70,11 +99,48 @@
         '<p class="lede">' + Z.escapeHtml(item.opis || '') + '</p>' +
       '</div></section>' +
       '<article class="akcija-body">' +
-        img +
-        paragraphs(item.tekst) +
+        telo +
+        galleryHtml +
         '<div class="akcija-nav-between"><a href="../index.html#akcije">← Sve akcije</a></div>' +
       '</article>';
+
+    initSlideshow();
   });
+
+  function initSlideshow(){
+    var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var wrap = document.getElementById('akcijaSlideshow');
+    if(!wrap) return;
+    var slides = Array.prototype.slice.call(wrap.querySelectorAll('.slide'));
+    var dotsWrap = wrap.querySelector('.slide-dots');
+    if(!dotsWrap || slides.length < 2) return;
+    var idx = 0;
+
+    slides.forEach(function(_, i){
+      var b = document.createElement('button');
+      b.type = 'button';
+      if(i === 0) b.className = 'active';
+      b.setAttribute('aria-label', 'Slika ' + (i + 1));
+      b.addEventListener('click', function(){ goTo(i); });
+      dotsWrap.appendChild(b);
+    });
+    var dots = Array.prototype.slice.call(dotsWrap.querySelectorAll('button'));
+
+    function goTo(i){
+      slides[idx].classList.remove('active');
+      dots[idx].classList.remove('active');
+      idx = (i + slides.length) % slides.length;
+      slides[idx].classList.add('active');
+      dots[idx].classList.add('active');
+    }
+
+    wrap.querySelector('.prev').addEventListener('click', function(){ goTo(idx - 1); });
+    wrap.querySelector('.next').addEventListener('click', function(){ goTo(idx + 1); });
+
+    if(!reduce){
+      setInterval(function(){ goTo(idx + 1); }, 4500);
+    }
+  }
 })();
 </script>
 
