@@ -136,7 +136,8 @@
   .familija-band{ background:var(--cream-2); }
   .familija-grid{ display:grid; grid-template-columns:220px 1fr; gap:44px; align-items:start; }
   @media (max-width:760px){ .familija-grid{grid-template-columns:1fr; text-align:center;} }
-  .familija-logo{ width:100%; max-width:220px; margin:0 auto; filter:drop-shadow(0 6px 14px rgba(43,32,21,0.18)); }
+  .familija-logo{ width:100%; max-width:220px; margin:0 auto; filter:drop-shadow(0 6px 14px rgba(43,32,21,0.18)); position:sticky; top:96px; }
+  @media (max-width:760px){ .familija-logo{ position:static; } }
   .familija-logo img{ width:100%; height:auto; display:block; }
   .familija-text p{ max-width:64ch; margin:0 0 16px; }
   .familija-quote{ font-family:var(--font-display); font-style:italic; font-size:1.05rem; color:var(--rust); border-left:3px solid var(--rust); padding-left:16px; margin:20px 0; }
@@ -204,24 +205,16 @@
 
   .support-note{ background:rgba(84,96,63,0.14); border-left:4px solid var(--moss); padding:14px 18px; font-size:0.9rem; margin:22px 0 6px; }
 
-  .bball-panel{ display:flex; gap:26px; align-items:center; margin:32px 0 6px; flex-wrap:wrap; background:var(--walnut); color:var(--cream); padding:26px; }
-  .bball-svg{ width:96px; height:96px; flex-shrink:0; animation:bball-spin 34s linear infinite; }
-  @keyframes bball-spin{ from{transform:rotate(0deg);} to{transform:rotate(360deg);} }
-  @media (prefers-reduced-motion:reduce){ .bball-svg{ animation:none; } }
-  .bball-chips{ display:flex; gap:10px; flex-wrap:wrap; flex:1; }
-  .bball-chip{ font-family:var(--font-mono); font-size:0.78rem; background:rgba(241,230,205,0.12); border:1px solid rgba(241,230,205,0.32); color:var(--cream); padding:8px 14px; border-radius:20px; cursor:pointer; }
-  .bball-chip.active, .bball-chip:hover, .bball-chip:focus-visible{ background:var(--amber); color:var(--walnut); border-color:var(--amber); }
-  .bball-detail{ font-size:0.92rem; color:rgba(241,230,205,0.88); max-width:64ch; margin-top:2px; flex-basis:100%; min-height:2.4em; }
 
   .contact-box{ display:grid; grid-template-columns:1fr 1fr; gap:32px; }
   @media (max-width:760px){ .contact-box{grid-template-columns:1fr;} }
   .contact-card{ background:var(--cream-2); padding:24px; }
   .contact-card .role{ font-family:var(--font-mono); font-size:0.72rem; color:var(--rust); text-transform:uppercase; letter-spacing:0.08em; }
   .contact-card .val{ font-family:var(--font-display); font-size:1.3rem; margin:6px 0 0; }
+  .contact-card .val + .val{ margin-top:4px; }
   .contact-card a{ text-decoration:none; border-bottom:1px solid var(--rust); }
 
-  .contact-form{ background:var(--cream-2); padding:26px; margin-top:24px; display:grid; gap:16px; max-width:calc((100% - 32px) / 2); }
-  @media (max-width:760px){ .contact-form{max-width:100%;} }
+  .contact-form{ background:var(--cream-2); padding:26px; display:grid; gap:16px; align-content:start; }
   .contact-form label{ display:grid; gap:6px; font-family:var(--font-mono); font-size:0.78rem; color:rgba(34,25,19,0.75); }
   .contact-form input, .contact-form textarea{
     font-family:var(--font-body); font-size:0.95rem; padding:10px 12px;
@@ -429,23 +422,6 @@
         Podršku su dali i meštani (sredstva i rad na tribinama, konstrukciji za koš, ogradi) i Grad Leskovac, koji je obezbedio LED reflektore za teren. Gradski većnik Žarko Bogatinović tom prilikom je istakao da grad iz godine u godinu izdvaja sve veća sredstva za sport — u 2024. godini oko 175 miliona dinara.
       </div>
 
-      <div class="bball-panel">
-        <svg class="bball-svg" viewBox="0 0 100 100" role="img" aria-label="Interaktivna lopta za košarku sa statistikom turnira">
-          <circle cx="50" cy="50" r="46" fill="#c9702e" stroke="#2b2015" stroke-width="2.5"/>
-          <path d="M50,4 L50,96" stroke="#2b2015" stroke-width="2.2" fill="none"/>
-          <path d="M4,50 L96,50" stroke="#2b2015" stroke-width="2.2" fill="none"/>
-          <path d="M12,17 C31,34 31,66 12,83" stroke="#2b2015" stroke-width="2.2" fill="none"/>
-          <path d="M88,17 C69,34 69,66 88,83" stroke="#2b2015" stroke-width="2.2" fill="none"/>
-        </svg>
-        <div class="bball-chips" id="bball-chips">
-          <button class="bball-chip active" data-detail="29 ekipa se prijavilo za grupnu fazu košarkaškog turnira.">29 ekipa</button>
-          <button class="bball-chip" data-detail="20 takmičara nadmetalo se u brzom šutiranju trojki.">20 u trojkama</button>
-          <button class="bball-chip" data-detail="20 takmičara nadmetalo se u izvođenju slobodnih bacanja.">20 u slob. bacanjima</button>
-          <button class="bball-chip" data-detail="Turnir je trajao tri dana — poslednji je bio rezervisan za stoni tenis.">3 dana turnira</button>
-          <p class="bball-detail" id="bball-detail">29 ekipa se prijavilo za grupnu fazu košarkaškog turnira.</p>
-        </div>
-      </div>
-
       <div class="familija-links">
         <a href="https://www.instagram.com/zlocudovo/" target="_blank" rel="noopener">Instagram: @zlocudovo →</a>
         <a href="https://www.tvl.rs/mestani-zlocudova-slogom-humanoscu-i-preduzimljivoscu-do-pozitivnih-promena-u-lokalnoj-zajednici/" target="_blank" rel="noopener">Izvor: Televizija Leskovac →</a>
@@ -618,18 +594,24 @@
       <span class="role">Telefon</span>
       <p class="val"><a href="tel:+381161234567">+381 16 123 4567</a></p>
     </div>
-  </div>
 
-  <form class="contact-form" id="contactForm">
-    <label>Ime
-      <input type="text" name="ime" required>
-    </label>
-    <label>Poruka
-      <textarea name="poruka" rows="4" required></textarea>
-    </label>
-    <button type="submit">Pošalji poruku</button>
-    <p class="form-note">Dugme otvara vaš mejl program sa već upisanom porukom.</p>
-  </form>
+    <form class="contact-form" id="contactForm">
+      <label>Ime
+        <input type="text" name="ime" required>
+      </label>
+      <label>Poruka
+        <textarea name="poruka" rows="4" required></textarea>
+      </label>
+      <button type="submit">Pošalji poruku</button>
+      <p class="form-note">Dugme otvara vaš mejl program sa već upisanom porukom.</p>
+    </form>
+
+    <div class="contact-card">
+      <span class="role">Društvene mreže</span>
+      <p class="val"><a href="https://www.instagram.com/zlocudovo/" target="_blank" rel="noopener">Instagram — @zlocudovo</a></p>
+      <p class="val"><a href="https://www.facebook.com/p/Zlo%C4%87udovo-Familija-100010956094103/" target="_blank" rel="noopener">Facebook — Zloćudovo Familija</a></p>
+    </div>
+  </div>
 </section>
 
 <footer>
@@ -729,21 +711,6 @@
   btn.addEventListener('click', function(){
     window.scrollTo({ top:0, behavior:'smooth' });
   });
-})();
-
-(function(){
-  var chipsWrap = document.getElementById('bball-chips');
-  if(chipsWrap){
-    var chips = Array.prototype.slice.call(chipsWrap.querySelectorAll('.bball-chip'));
-    var detail = document.getElementById('bball-detail');
-    chips.forEach(function(chip){
-      chip.addEventListener('click', function(){
-        chips.forEach(function(c){ c.classList.remove('active'); });
-        chip.classList.add('active');
-        detail.textContent = chip.dataset.detail;
-      });
-    });
-  }
 })();
 
 window.initTimelineCollapse = function(){
