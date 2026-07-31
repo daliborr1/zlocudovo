@@ -1,0 +1,11 @@
+{
+  "aktivna": false,
+  "naslov": "Sledeća akcija TEST",
+  "glavna_slika": {
+    "izgled": "right",
+    "velicina_slike": "mala",
+    "opis_slike": "opis slike",
+    "slika": "/images/uploads/123.jpg"
+  },
+  "tekst": "**Ovo je test .**"
+}
