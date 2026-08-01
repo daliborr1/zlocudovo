@@ -21,11 +21,14 @@
   }
 
   function matchHtml(m){
-    var row1 = '<div class="t-match-team"><span>' + esc(m.tim1) + '</span>' + scoreHtml(m.rezultat1) + '</div>';
+    var hasScores = (m.rezultat1 || m.rezultat1 === 0) && (m.rezultat2 || m.rezultat2 === 0);
+    var win1 = hasScores && m.rezultat1 > m.rezultat2;
+    var win2 = hasScores && m.rezultat2 > m.rezultat1;
+    var row1 = '<div class="t-match-team' + (win1 ? ' win' : '') + '"><span>' + esc(m.tim1) + '</span>' + scoreHtml(m.rezultat1) + '</div>';
     if(!m.tim2){
       return '<div class="t-match">' + row1 + '<div class="bye">slobodno (bye)</div></div>';
     }
-    var row2 = '<div class="t-match-team"><span>' + esc(m.tim2) + '</span>' + scoreHtml(m.rezultat2) + '</div>';
+    var row2 = '<div class="t-match-team' + (win2 ? ' win' : '') + '"><span>' + esc(m.tim2) + '</span>' + scoreHtml(m.rezultat2) + '</div>';
     return '<div class="t-match">' + row1 + row2 + '</div>';
   }
 
@@ -89,6 +92,18 @@
     }).join('') + '</div>';
   }
 
+  var STATUS_COLORS = {
+    'Uskoro': 'rgba(43,32,21,0.4)',
+    'Pretkolo u toku': 'var(--leaf)',
+    'U toku': 'var(--leaf)',
+    'Finale u toku': 'var(--rust)',
+    'Turnir završen': 'var(--amber)'
+  };
+
+  function statusColor(status){
+    return STATUS_COLORS[status] || 'var(--leaf)';
+  }
+
   function statNum(val, label){
     return val ? '<div><div class="num">' + esc(val) + '</div><div class="lbl">' + esc(label) + '</div></div>' : '';
   }
@@ -129,7 +144,7 @@
       '<div class="t-eyebrow">Omladinski pokret „Familija" predstavlja</div>' +
       '<h1>' + esc(naziv) + '</h1>' +
       (s.opis ? '<div class="lede">' + (Z ? Z.renderInline(s.opis) : esc(s.opis)) + '</div>' : '') +
-      '<div class="t-status"><span class="dot"></span>Status: ' + esc(s.status || 'Uskoro') + '</div>' +
+      '<div class="t-status"><span class="dot" style="background:' + statusColor(s.status) + ';"></span>Status: ' + esc(s.status || 'Uskoro') + '</div>' +
       '<div class="t-stats">' +
         statNum(s.broj_ekipa, 'ekipa') +
         statNum(s.sport, 'sport') +

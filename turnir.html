@@ -5,6 +5,16 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Turnir — Zloćudovo</title>
 <meta name="description" content="Turnir u organizaciji omladinskog pokreta „Familija" iz Zloćudova — žreb, raspored, rezultati i novosti.">
+<meta property="og:title" content="Turnir — Zloćudovo">
+<meta property="og:description" content="Turnir u organizaciji omladinskog pokreta „Familija" iz Zloćudova — žreb, raspored, rezultati i novosti.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://zlocudovo.netlify.app/turnir.html">
+<meta property="og:image" content="https://zlocudovo.netlify.app/images/site/familija-logo.png">
+<meta property="og:locale" content="sr_RS">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Turnir — Zloćudovo">
+<meta name="twitter:description" content="Turnir u organizaciji omladinskog pokreta „Familija" iz Zloćudova — žreb, raspored, rezultati i novosti.">
+<meta name="twitter:image" content="https://zlocudovo.netlify.app/images/site/familija-logo.png">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='48' fill='%232b2015'/%3E%3Ccircle cx='50' cy='50' r='30' fill='%23c08a3e'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=Work+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -61,6 +71,8 @@
   .t-match-team{ display:flex; justify-content:space-between; padding:4px 0; }
   .t-match-team + .t-match-team{ border-top:1px solid rgba(43,32,21,0.1); }
   .t-match-team .score{ font-family:var(--font-mono); color:var(--rust); font-weight:600; }
+  .t-match-team.win{ font-weight:700; }
+  .t-match-team.win .score{ color:var(--leaf); }
   .t-match .bye{ padding:4px 0; font-size:0.75rem; color:rgba(34,25,19,0.5); font-style:italic; }
 
   .t-schedule{ display:flex; flex-direction:column; gap:10px; }
@@ -83,6 +95,17 @@
   .t-contact-links a{ text-decoration:none; border-bottom:1px solid var(--rust); }
 
   footer{ text-align:center; padding:28px 32px; font-family:var(--font-mono); font-size:0.78rem; color:rgba(43,32,21,0.6); border-top:1px solid rgba(43,32,21,0.12); }
+
+  .to-top{
+    position:fixed; right:20px; bottom:20px; z-index:60;
+    width:44px; height:44px; border-radius:50%; border:none;
+    background:var(--rust); color:var(--cream); font-size:1.1rem;
+    cursor:pointer; box-shadow:0 4px 14px rgba(0,0,0,0.35);
+    opacity:0; pointer-events:none; transform:translateY(10px);
+    transition:opacity .25s ease, transform .25s ease, background .2s ease;
+  }
+  .to-top.visible{ opacity:1; pointer-events:auto; transform:translateY(0); }
+  .to-top:hover, .to-top:focus-visible{ background:var(--river); }
 </style>
 </head>
 <body>
@@ -110,7 +133,22 @@
   <p>Zloćudovo · Grad Leskovac · Jablanički okrug</p>
 </footer>
 
+<button class="to-top" id="toTop" aria-label="Nazad na vrh">↑</button>
+
 <script src="/js/akcije-shared.js"></script>
 <script src="/js/turnir.js"></script>
+<script>
+(function(){
+  var btn = document.getElementById('toTop');
+  if(!btn) return;
+  window.addEventListener('scroll', function(){
+    if(window.scrollY > 500){ btn.classList.add('visible'); }
+    else{ btn.classList.remove('visible'); }
+  });
+  btn.addEventListener('click', function(){
+    window.scrollTo({ top:0, behavior:'smooth' });
+  });
+})();
+</script>
 </body>
 </html>

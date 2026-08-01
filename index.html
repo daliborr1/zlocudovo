@@ -793,6 +793,60 @@ window.initSlideshow = function(wrap){
 })();
 </script>
 
+<script>
+(function(){
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if(reduce || !('IntersectionObserver' in window)) return;
+
+  var row = document.querySelector('#stanovnistvo .stats-row');
+  if(!row) return;
+  var nums = Array.prototype.slice.call(row.querySelectorAll('.num'));
+  if(!nums.length) return;
+
+  function parseTarget(text){
+    var hasComma = text.indexOf(',') !== -1;
+    var normalized = text.replace(',', '.');
+    var value = parseFloat(normalized);
+    var decimals = hasComma ? (normalized.split('.')[1] || '').length : 0;
+    return { value: value, decimals: decimals };
+  }
+
+  function formatValue(value, decimals){
+    var s = value.toFixed(decimals);
+    return decimals > 0 ? s.replace('.', ',') : s;
+  }
+
+  function animateOne(el){
+    var target = parseTarget(el.textContent.trim());
+    if(!isFinite(target.value)) return;
+    var duration = 1400;
+    var start = null;
+    function step(ts){
+      if(start === null) start = ts;
+      var progress = Math.min((ts - start) / duration, 1);
+      var eased = 1 - Math.pow(1 - progress, 3);
+      el.textContent = formatValue(target.value * eased, target.decimals);
+      if(progress < 1){
+        requestAnimationFrame(step);
+      } else {
+        el.textContent = formatValue(target.value, target.decimals);
+      }
+    }
+    requestAnimationFrame(step);
+  }
+
+  var observer = new IntersectionObserver(function(entries){
+    entries.forEach(function(entry){
+      if(entry.isIntersecting){
+        nums.forEach(animateOne);
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.4 });
+  observer.observe(row);
+})();
+</script>
+
 <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
 <script>
   (function(){
