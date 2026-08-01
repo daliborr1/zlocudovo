@@ -1,0 +1,20 @@
+{
+  "items": [
+    {
+      "slika": "/images/site/turnir-utakmica.jpg",
+      "opis": "Utakmica na humanitarnom turniru „Igraj za zdravlje – budi human\""
+    },
+    {
+      "slika": "/images/site/turnir-otvaranje.jpg",
+      "opis": "Otvaranje turnira — obraćanje organizatora i predstavnika lokalne samouprave"
+    },
+    {
+      "slika": "/images/site/turnir-ekipe.jpg",
+      "opis": "Ekipe i organizatori turnira, uz podršku lokalnih sponzora"
+    },
+    {
+      "slika": "/images/site/turnir-familija-majice.jpg",
+      "opis": "Članovi pokreta „Familija\", u majicama sa logom udruženja"
+    }
+  ]
+}

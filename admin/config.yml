@@ -179,3 +179,40 @@ collections:
             hint: "Kratak tekst ispod slike (opciono)"
             buttons: ["bold", "italic", "link"]
             modes: ["rich_text"]
+
+
+  - name: "familija-galerija"
+    label: "Familija — Galerija"
+    folder: "content/familija-galerija"
+    create: true
+    slug: "{{year}}-{{month}}-{{day}}-{{hour}}{{minute}}{{second}}-{{slug}}"
+    identifier_field: "opis"
+    summary: "{{opis}}"
+    extension: "json"
+    format: "json"
+    fields:
+      - label: "Slika"
+        name: "slika"
+        widget: "image"
+      - label: "Opis"
+        name: "opis"
+        widget: "string"
+        hint: "Prikazuje se preko slike u slajd šou-u (sekcija „Omladinski pokret Familija”)."
+
+  - name: "akcije-galerija"
+    label: "Akcije — Galerija"
+    folder: "content/akcije-galerija"
+    create: true
+    slug: "{{year}}-{{month}}-{{day}}-{{hour}}{{minute}}{{second}}-{{slug}}"
+    identifier_field: "opis"
+    summary: "{{opis}}"
+    extension: "json"
+    format: "json"
+    fields:
+      - label: "Slika"
+        name: "slika"
+        widget: "image"
+      - label: "Opis"
+        name: "opis"
+        widget: "string"
+        hint: "Prikazuje se preko slike u slajd šou-u (sekcija „Akcije za selo, kroz godine”)."
