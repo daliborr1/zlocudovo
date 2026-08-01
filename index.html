@@ -44,10 +44,11 @@
   a{color:inherit;}
   ::selection{background:var(--rust); color:var(--cream);}
 
-  header.nav{ position:sticky; top:0; z-index:50; display:flex; align-items:center; justify-content:space-between; padding:16px 32px; background:rgba(241,230,205,0.92); backdrop-filter:blur(6px); border-bottom:1px solid rgba(43,32,21,0.12); }
-  .nav-mark{ font-family:var(--font-display); font-weight:700; font-size:1.15rem; letter-spacing:0.01em; }
+  header.nav{ position:sticky; top:0; z-index:50; background:rgba(241,230,205,0.92); backdrop-filter:blur(6px); border-bottom:1px solid rgba(43,32,21,0.12); }
+  .nav-inner{ display:flex; align-items:center; justify-content:space-between; max-width:1080px; margin:0 auto; padding:16px 32px; }
+  .nav-mark{ font-family:var(--font-display); font-weight:700; font-size:1.2rem; letter-spacing:0.01em; }
   .nav-mark span{color:var(--rust);}
-  .nav-links{display:flex; gap:20px; font-size:0.8rem; font-family:var(--font-mono);}
+  .nav-links{display:flex; gap:20px; font-size:0.85rem; font-family:var(--font-mono);}
   .nav-links a{ text-decoration:none; opacity:0.75; border-bottom:1px solid transparent; padding-bottom:2px; transition:opacity .2s, border-color .2s; }
   .nav-links a:hover, .nav-links a:focus-visible{opacity:1; border-color:var(--rust);}
   .nav-links a.active{ opacity:1; color:var(--rust); border-color:var(--rust); }
@@ -248,7 +249,8 @@
   @media (max-width:760px){ .loc-box{grid-template-columns:1fr;} }
   .loc-box h3{ font-family:var(--font-display); font-size:1.4rem; margin:0 0 12px; }
   .loc-box a.map-link{ display:inline-block; margin-top:14px; font-family:var(--font-mono); font-size:0.85rem; color:var(--cream); text-decoration:none; border-bottom:1px solid var(--amber); }
-  .loc-svg-wrap svg{width:100%; height:auto;}
+  .loc-svg-wrap{ min-width:0; overflow:hidden; }
+  .loc-svg-wrap img{ display:block; width:100%; max-width:100%; height:auto; }
   .map-legend{ font-family:var(--font-mono); font-size:9px; fill:rgba(241,230,205,0.85); }
   .map-legend-dark{ font-family:var(--font-mono); font-size:9px; fill:var(--walnut); }
   .shield-a1{ fill:#2d7a3d; stroke:var(--cream); stroke-width:1; }
@@ -287,20 +289,22 @@
 <a href="#main-content" class="skip-link">Preskoči na sadržaj</a>
 
 <header class="nav">
-  <div class="nav-mark">Zloćudovo</div>
-  <nav class="nav-links" id="navLinks">
-    <a href="#o-selu">O selu</a>
-    <a href="#stanovnistvo">Stanovništvo</a>
-    <a href="#familija">Familija</a>
-    <a href="#akcije">Akcije</a>
-    <a href="#najave">Najave</a>
-    <a href="#industrija">Privreda</a>
-    <a href="#lokacija">Lokacija</a>
-    <a href="#kontakt">Kontakt</a>
-  </nav>
-  <button class="nav-toggle" id="navToggle" aria-label="Otvori meni" aria-expanded="false" aria-controls="navLinks">
-    <span></span><span></span><span></span>
-  </button>
+  <div class="nav-inner">
+    <div class="nav-mark">Zloćudovo</div>
+    <nav class="nav-links" id="navLinks">
+      <a href="#o-selu">O selu</a>
+      <a href="#stanovnistvo">Stanovništvo</a>
+      <a href="#familija">Familija</a>
+      <a href="#akcije">Akcije</a>
+      <a href="#najave">Najave</a>
+      <a href="#industrija">Privreda</a>
+      <a href="#lokacija">Lokacija</a>
+      <a href="#kontakt">Kontakt</a>
+    </nav>
+    <button class="nav-toggle" id="navToggle" aria-label="Otvori meni" aria-expanded="false" aria-controls="navLinks">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
 </header>
 
 <section class="hero" id="main-content" tabindex="-1" style="max-width:none;">
