@@ -461,7 +461,7 @@
   <div class="akcije-grid">
     <div class="timeline-wrap collapsed" id="timelineWrap">
     <ul class="timeline" id="timelineMain">
-      <li style="--tc:var(--river)">
+      <li>
         <a class="akcija-box" href="akcije/2025-novi-humanitarni-turnir.html">
           <span class="yr">2025</span>
           <h4>Novi humanitarni turnir</h4>
@@ -469,7 +469,7 @@
           <span class="akcija-more">Pročitaj više →</span>
         </a>
       </li>
-      <li style="--tc:var(--rust)">
+      <li>
         <a class="akcija-box" href="akcije/2024-humanitarni-turnir.html">
           <span class="yr">2024</span>
           <h4>Humanitarni turnir „Igraj za zdravlje – budi human"</h4>
@@ -477,7 +477,7 @@
           <span class="akcija-more">Pročitaj više →</span>
         </a>
       </li>
-      <li style="--tc:var(--rust)">
+      <li>
         <a class="akcija-box" href="akcije/2023-osnivanje-familije.html">
           <span class="yr">2023</span>
           <h4>Osnivanje „Familije"</h4>
@@ -488,7 +488,7 @@
     </ul>
     <div class="timeline-fade-box" id="timelineFadeBox">
     <ul class="timeline timeline-extra" id="timelineExtra">
-      <li style="--tc:var(--leaf)" class="timeline-hidden">
+      <li class="timeline-hidden">
         <a class="akcija-box" href="akcije/2021-drvo-za-nase-selo.html">
           <span class="yr">2021</span>
           <h4>„Drvo za naše selo"</h4>
@@ -871,19 +871,27 @@ window.initSlideshow = function(wrap){
   var VISIBLE_COUNT = 3;
   var colors = ['var(--river)', 'var(--rust)', 'var(--leaf)'];
 
+  function colorForYear(godina){
+    var y = parseInt(godina, 10);
+    if(!isFinite(y)) return colors[0];
+    return colors[((y % colors.length) + colors.length) % colors.length];
+  }
+
   function collectStatic(list){
     return Array.prototype.map.call(list.querySelectorAll('li'), function(li){
       var yr = li.querySelector('.yr');
+      var godina = yr ? yr.textContent : '0';
       li.classList.remove('timeline-hidden');
-      return { godina: yr ? yr.textContent : '0', node: li };
+      li.style.setProperty('--tc', colorForYear(godina));
+      return { godina: godina, node: li };
     });
   }
 
   function render(items){
     var staticEntries = collectStatic(mainList).concat(collectStatic(extraList));
-    var dynEntries = items.map(function(item, i){
+    var dynEntries = items.map(function(item){
       var li = document.createElement('li');
-      li.style.setProperty('--tc', colors[i % colors.length]);
+      li.style.setProperty('--tc', colorForYear(item.godina));
       var slug = Z.slugFor(item);
       li.innerHTML =
         '<a class="akcija-box" href="akcije/prikaz.html?slug=' + encodeURIComponent(slug) + '">' +
