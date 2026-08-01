@@ -107,6 +107,12 @@
   .fact-plank b{display:block; font-family:var(--font-display); font-size:1.1rem; margin-bottom:2px;}
   .fact-plank p{ margin:0 0 10px; }
 
+  .turnir-banner{ display:block; background:var(--walnut); color:var(--cream); text-decoration:none; padding:24px 32px; margin:32px auto; max-width:1080px; border-radius:2px; border-left:4px solid var(--amber); transition:border-color .2s ease; }
+  .turnir-banner:hover{ border-left-color:var(--rust); }
+  .turnir-banner .tb-tag{ font-family:var(--font-mono); font-size:0.72rem; text-transform:uppercase; letter-spacing:0.08em; color:var(--amber); }
+  .turnir-banner h3{ font-family:var(--font-display); font-size:1.4rem; margin:8px 0; }
+  .turnir-banner .tb-cta{ font-family:var(--font-mono); font-size:0.85rem; color:var(--amber); }
+
   /* Kompaktna verzija akcija-media-block/row klasa, za "Najave" karticu na pocetnoj */
   .najava-plank .akcija-media-block{ margin:8px 0; }
   .najava-plank .akcija-media-block.size-mala{ max-width:100px; }
@@ -361,6 +367,8 @@
     </div>
   </div>
 </section>
+
+<div id="turnirBanner"></div>
 
 <section id="o-selu">
   <div class="section-head"><span class="tag" style="color:var(--rust)">01</span><h2>O selu</h2></div>
@@ -895,6 +903,27 @@ window.initSlideshow = function(wrap){
 
   fillSlideshow('/data/familija-galerija.json', 'familijaSlideshow');
   fillSlideshow('/data/akcije-galerija.json', 'akcijeSlideshow');
+})();
+</script>
+
+<script>
+(function(){
+  var Z = window.ZlocudovoAkcije;
+  var banner = document.getElementById('turnirBanner');
+  if(!Z || !banner) return;
+
+  fetch('/data/turnir-podesavanja.json', { cache: 'no-store' })
+    .then(function(r){ return r.ok ? r.json() : {}; })
+    .then(function(s){
+      if(!s || !s.aktivan) return;
+      banner.innerHTML =
+        '<a class="turnir-banner" href="turnir.html">' +
+          '<span class="tb-tag">Turnir u toku</span>' +
+          '<h3>' + Z.escapeHtml(s.naziv || 'Turnir') + '</h3>' +
+          '<span class="tb-cta">Pogledaj žreb, raspored i rezultate →</span>' +
+        '</a>';
+    })
+    .catch(function(){});
 })();
 </script>
 

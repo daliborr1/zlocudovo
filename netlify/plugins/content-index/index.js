@@ -31,5 +31,8 @@ module.exports = {
     writeIndex(root, 'najave', 'najave.json', 'najave');
     writeIndex(root, 'familija-galerija', 'familija-galerija.json', 'items');
     writeIndex(root, 'akcije-galerija', 'akcije-galerija.json', 'items');
+    writeIndex(root, 'turnir-utakmice', 'turnir-utakmice.json', 'items');
+    writeIndex(root, 'turnir-novosti', 'turnir-novosti.json', 'items');
+    writeIndex(root, 'turnir-sponzori', 'turnir-sponzori.json', 'items');
   }
 };

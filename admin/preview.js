@@ -44,11 +44,85 @@
     }
   });
 
+  // "Turnir" je files kolekcija sa jednim fajlom ("podesavanja") - registruje
+  // se po imenu FAJLA, ne kolekcije (isti poznat Decap bag kao ranije).
+  var TurnirPodesavanjaPreview = createClass({
+    render: function(){
+      var entry = this.props.entry;
+      var data = entry.get('data');
+      var s = data ? data.toJS() : {};
+      var esc = Z ? Z.escapeHtml : function(x){ return x; };
+      var status = s.aktivan ? 'AKTIVAN — prikazuje se baner na početnoj' : 'neaktivan — baner se ne prikazuje';
+      var html =
+        '<div class="preview-item-label">Turnir — ' + esc(status) + '</div>' +
+        '<div class="fact-plank">' +
+          '<b>' + esc(s.naziv || 'Turnir') + '</b>' +
+          (s.opis ? '<p>' + (Z ? Z.renderInline(s.opis) : esc(s.opis)) + '</p>' : '') +
+          '<p style="font-family:\'IBM Plex Mono\',monospace;font-size:0.82rem;">' +
+            'Status: ' + esc(s.status || '') + ' · Sport: ' + esc(s.sport || '') + ' · Format: ' + esc(s.format || '') + ' · Datum: ' + esc(s.datum || '') + ' · Ekipa: ' + esc(s.broj_ekipa || '') +
+          '</p>' +
+          (s.prikazi_pobednika ? '<p><b>Pobednik:</b> ' + esc(s.pobednik_naziv || '(još nije upisan)') + '</p>' : '') +
+        '</div>';
+      return h('div', { className: 'preview-wrap', dangerouslySetInnerHTML: { __html: html } });
+    }
+  });
+
+  var TurnirMatchPreview = createClass({
+    render: function(){
+      var entry = this.props.entry;
+      var data = entry.get('data');
+      var m = data ? data.toJS() : {};
+      var esc = Z ? Z.escapeHtml : function(x){ return x; };
+      var html =
+        '<div class="preview-item-label">' + esc(m.runda || 'Utakmica') + '</div>' +
+        '<div class="fact-plank">' +
+          '<b>' + esc(m.tim1 || '') + (m.tim2 ? ' : ' + esc(m.tim2) : ' (slobodno / bye)') + '</b>' +
+          ((m.rezultat1 || m.rezultat1 === 0) ? '<p>Rezultat: ' + esc(m.rezultat1) + ' : ' + esc(m.rezultat2) + '</p>' : '') +
+          ((m.datum || m.vreme || m.teren) ? '<p style="font-family:\'IBM Plex Mono\',monospace;font-size:0.82rem;">' + [m.datum, m.vreme, m.teren].filter(Boolean).map(esc).join(' · ') + '</p>' : '') +
+        '</div>';
+      return h('div', { className: 'preview-wrap', dangerouslySetInnerHTML: { __html: html } });
+    }
+  });
+
+  var TurnirNewsPreview = createClass({
+    render: function(){
+      var entry = this.props.entry;
+      var data = entry.get('data');
+      var n = data ? data.toJS() : {};
+      var esc = Z ? Z.escapeHtml : function(x){ return x; };
+      var html =
+        '<div class="preview-item-label">' + esc(n.datum || 'Novost') + '</div>' +
+        '<div class="fact-plank">' +
+          '<b>' + esc(n.naslov || '') + '</b>' +
+          (Z ? Z.renderMarkdown(n.tekst) : '<p>' + esc(n.tekst || '') + '</p>') +
+        '</div>';
+      return h('div', { className: 'preview-wrap', dangerouslySetInnerHTML: { __html: html } });
+    }
+  });
+
+  var TurnirSponsorPreview = createClass({
+    render: function(){
+      var entry = this.props.entry;
+      var data = entry.get('data');
+      var s = data ? data.toJS() : {};
+      var esc = Z ? Z.escapeHtml : function(x){ return x; };
+      var img = s.logo
+        ? '<img class="preview-photo" style="max-width:220px;" src="' + esc(s.logo) + '" alt="' + esc(s.naziv || '') + '">'
+        : '<div class="preview-empty">Nema logotipa.</div>';
+      var html = img + '<p class="preview-caption">' + esc(s.naziv || '') + '</p>';
+      return h('div', { className: 'preview-wrap', dangerouslySetInnerHTML: { __html: html } });
+    }
+  });
+
   // Sve su folder kolekcije, pa se registruju po imenu kolekcije direktno.
   CMS.registerPreviewTemplate('akcije', AkcijaPreview);
   CMS.registerPreviewTemplate('najave', NajavaPreview);
   CMS.registerPreviewTemplate('familija-galerija', GalleryPhotoPreview);
   CMS.registerPreviewTemplate('akcije-galerija', GalleryPhotoPreview);
+  CMS.registerPreviewTemplate('podesavanja', TurnirPodesavanjaPreview);
+  CMS.registerPreviewTemplate('turnir-utakmice', TurnirMatchPreview);
+  CMS.registerPreviewTemplate('turnir-novosti', TurnirNewsPreview);
+  CMS.registerPreviewTemplate('turnir-sponzori', TurnirSponsorPreview);
 
   CMS.registerPreviewStyle('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=Work+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap');
   CMS.registerPreviewStyle('/akcije/akcija.css');

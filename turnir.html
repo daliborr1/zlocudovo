@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="sr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Turnir — Zloćudovo</title>
+<meta name="description" content="Turnir u organizaciji omladinskog pokreta „Familija" iz Zloćudova — žreb, raspored, rezultati i novosti.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='48' fill='%232b2015'/%3E%3Ccircle cx='50' cy='50' r='30' fill='%23c08a3e'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=Work+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --walnut:#2b2015; --cream:#f1e6cd; --cream-2:#e7d8b8; --moss:#54603f;
+    --rust:#a3472e; --amber:#c08a3e; --river:#3d7d96; --leaf:#6b8f3f; --ink:#221913;
+    --font-display:'Fraunces', serif; --font-body:'Work Sans', sans-serif; --font-mono:'IBM Plex Mono', monospace;
+  }
+  *{ box-sizing:border-box; }
+  body{ margin:0; background:var(--cream); color:var(--ink); font-family:var(--font-body); line-height:1.6; }
+  a{ color:inherit; }
+
+  header.nav{ position:sticky; top:0; z-index:50; display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:12px; padding:16px 32px; background:var(--walnut); color:var(--cream); }
+  header.nav .brand{ display:flex; align-items:baseline; gap:10px; flex-wrap:wrap; }
+  header.nav .brand a{ font-family:var(--font-display); font-weight:700; font-size:1.15rem; text-decoration:none; color:var(--cream); }
+  header.nav .brand span{ color:rgba(241,230,205,0.6); font-family:var(--font-mono); font-size:0.85rem; }
+  header.nav nav{ display:flex; gap:20px; flex-wrap:wrap; font-size:0.85rem; font-family:var(--font-mono); }
+  header.nav nav a{ text-decoration:none; color:rgba(241,230,205,0.85); }
+  header.nav nav a:hover{ color:var(--amber); }
+
+  .t-hero{ padding:64px 32px 48px; text-align:center; }
+  .t-eyebrow{ font-family:var(--font-mono); font-size:0.78rem; letter-spacing:0.08em; text-transform:uppercase; color:var(--rust); font-weight:600; margin-bottom:14px; }
+  .t-hero h1{ font-family:var(--font-display); font-weight:700; font-size:clamp(2rem,5vw,3rem); margin:0 0 16px; }
+  .t-hero .lede{ max-width:640px; margin:0 auto 24px; font-size:1.05rem; color:rgba(34,25,19,0.8); }
+  .t-status{ display:inline-flex; align-items:center; gap:10px; background:var(--cream-2); border:1px solid rgba(43,32,21,0.15); border-radius:999px; padding:8px 20px; font-size:0.85rem; font-weight:500; margin-bottom:32px; font-family:var(--font-mono); }
+  .t-status .dot{ width:8px; height:8px; border-radius:50%; background:var(--leaf); }
+  .t-stats{ display:flex; justify-content:center; gap:36px; flex-wrap:wrap; padding-top:20px; border-top:1px solid rgba(43,32,21,0.15); max-width:720px; margin:0 auto; }
+  .t-stats .num{ font-family:var(--font-display); font-size:1.6rem; font-weight:700; }
+  .t-stats .lbl{ font-size:0.78rem; color:rgba(34,25,19,0.6); font-family:var(--font-mono); }
+
+  section.t-section{ padding:48px 32px; max-width:1080px; margin:0 auto; }
+  section.t-section.alt{ background:var(--cream-2); max-width:none; }
+  section.t-section.alt > *{ max-width:1080px; margin-left:auto; margin-right:auto; }
+  .t-section .section-head{ display:flex; align-items:baseline; gap:16px; margin-bottom:28px; border-bottom:1px solid rgba(43,32,21,0.18); padding-bottom:14px; }
+  .t-section .tag{ font-family:var(--font-mono); font-size:0.78rem; color:var(--rust); letter-spacing:0.1em; text-transform:uppercase; }
+  .t-section h2{ font-family:var(--font-display); font-weight:600; font-size:1.7rem; margin:0; }
+  .t-section .lede{ color:rgba(34,25,19,0.7); max-width:620px; margin:0 0 28px; }
+  .t-empty{ color:rgba(34,25,19,0.55); font-family:var(--font-mono); font-size:0.88rem; }
+
+  .t-winner{ display:flex; gap:32px; flex-wrap:wrap; align-items:center; background:var(--cream); border:1px solid rgba(43,32,21,0.15); border-radius:4px; padding:28px; }
+  .t-winner img{ width:220px; height:160px; object-fit:cover; border-radius:2px; flex-shrink:0; }
+  .t-winner .lbl{ font-family:var(--font-mono); font-size:0.78rem; text-transform:uppercase; letter-spacing:0.06em; color:rgba(34,25,19,0.6); margin-bottom:6px; }
+  .t-winner .name{ font-family:var(--font-display); font-size:1.6rem; font-weight:700; color:var(--rust); }
+
+  .t-bracket-wrap{ overflow-x:auto; padding-bottom:12px; }
+  .t-bracket{ display:flex; gap:20px; min-width:900px; }
+  .t-round{ display:flex; flex-direction:column; flex:1; min-width:180px; }
+  .t-round-name{ text-align:center; font-family:var(--font-mono); font-size:0.78rem; font-weight:600; color:rgba(34,25,19,0.7); text-transform:uppercase; letter-spacing:0.04em; margin-bottom:12px; }
+  .t-round-matches{ display:flex; flex-direction:column; justify-content:space-around; flex:1; gap:12px; }
+  .t-match{ background:var(--cream); border:1px solid rgba(43,32,21,0.15); border-radius:4px; padding:10px 12px; font-size:0.85rem; }
+  .t-match-team{ display:flex; justify-content:space-between; padding:4px 0; }
+  .t-match-team + .t-match-team{ border-top:1px solid rgba(43,32,21,0.1); }
+  .t-match-team .score{ font-family:var(--font-mono); color:var(--rust); font-weight:600; }
+  .t-match .bye{ padding:4px 0; font-size:0.75rem; color:rgba(34,25,19,0.5); font-style:italic; }
+
+  .t-schedule{ display:flex; flex-direction:column; gap:10px; }
+  .t-schedule-item{ display:flex; align-items:center; gap:20px; background:var(--cream); border:1px solid rgba(43,32,21,0.15); border-radius:4px; padding:14px 20px; flex-wrap:wrap; font-size:0.9rem; }
+  .t-schedule-item .teams{ font-family:var(--font-display); font-weight:600; min-width:200px; }
+  .t-schedule-item .meta{ color:rgba(34,25,19,0.65); font-family:var(--font-mono); font-size:0.82rem; }
+
+  .t-news{ display:flex; flex-direction:column; gap:16px; }
+  .t-news-item{ display:flex; gap:20px; border-bottom:1px solid rgba(43,32,21,0.15); padding-bottom:16px; flex-wrap:wrap; }
+  .t-news-date{ min-width:100px; font-family:var(--font-mono); font-size:0.78rem; color:var(--rust); font-weight:600; }
+  .t-news-title{ font-family:var(--font-display); font-weight:600; font-size:1.1rem; margin-bottom:4px; }
+  .t-news-body{ font-size:0.9rem; color:rgba(34,25,19,0.75); }
+  .t-news-body p{ margin:0 0 10px; }
+
+  .t-sponsors{ display:grid; grid-template-columns:repeat(auto-fit,minmax(140px,1fr)); gap:16px; }
+  .t-sponsor{ background:var(--cream); border:1px solid rgba(43,32,21,0.15); border-radius:4px; padding:16px; display:flex; align-items:center; justify-content:center; height:90px; }
+  .t-sponsor img{ max-width:100%; max-height:100%; object-fit:contain; }
+
+  .t-contact-links{ display:flex; gap:28px; flex-wrap:wrap; font-size:0.95rem; }
+  .t-contact-links a{ text-decoration:none; border-bottom:1px solid var(--rust); }
+
+  footer{ text-align:center; padding:28px 32px; font-family:var(--font-mono); font-size:0.78rem; color:rgba(43,32,21,0.6); border-top:1px solid rgba(43,32,21,0.12); }
+</style>
+</head>
+<body>
+
+<header class="nav">
+  <div class="brand">
+    <a href="index.html">Zloćudovo</a>
+    <span id="turnirYearLabel">/ Turnir</span>
+  </div>
+  <nav>
+    <a href="#pobednik" id="navPobednik" style="display:none;">Pobednik</a>
+    <a href="#zdreb">Žreb</a>
+    <a href="#raspored">Raspored</a>
+    <a href="#novosti">Novosti</a>
+    <a href="#sponzori" id="navSponzori" style="display:none;">Sponzori</a>
+    <a href="#kontakt">Kontakt</a>
+  </nav>
+</header>
+
+<div id="turnirContent">
+  <p style="padding:56px 32px; text-align:center; font-family:var(--font-mono); color:rgba(43,32,21,0.6);">Učitavanje…</p>
+</div>
+
+<footer>
+  <p>Zloćudovo · Grad Leskovac · Jablanički okrug</p>
+</footer>
+
+<script src="/js/akcije-shared.js"></script>
+<script src="/js/turnir.js"></script>
+</body>
+</html>

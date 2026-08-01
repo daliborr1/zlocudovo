@@ -1,0 +1,14 @@
+{
+  "aktivan": true,
+  "naziv": "Turnir u košarci",
+  "opis": "",
+  "sport": "Košarka",
+  "format": "Kup sistem",
+  "datum": "TBA",
+  "broj_ekipa": 0,
+  "status": "Uskoro",
+  "prikazi_pobednika": false,
+  "pobednik_naziv": "",
+  "pobednik_slika": "",
+  "prikazi_sponzore": false
+}

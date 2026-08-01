@@ -216,3 +216,158 @@ collections:
         name: "opis"
         widget: "string"
         hint: "Prikazuje se preko slike u slajd šou-u (sekcija „Akcije za selo, kroz godine”)."
+
+
+  - name: "turnir"
+    label: "Turnir"
+    files:
+      - name: "podesavanja"
+        label: "Podešavanja turnira"
+        file: "data/turnir-podesavanja.json"
+        fields:
+          - label: "Aktivan (prikaži na sajtu)"
+            name: "aktivan"
+            widget: "boolean"
+            default: false
+            hint: "Uključi da bi se kartica turnira pojavila na početnoj strani, iznad „O selu”."
+          - label: "Naziv turnira"
+            name: "naziv"
+            widget: "string"
+            default: "Turnir u košarci"
+          - label: "Opis"
+            name: "opis"
+            widget: "markdown"
+            required: false
+            buttons: ["bold", "italic", "link"]
+            modes: ["rich_text"]
+          - label: "Sport"
+            name: "sport"
+            widget: "string"
+            default: "Košarka"
+            required: false
+          - label: "Format"
+            name: "format"
+            widget: "string"
+            default: "Kup sistem"
+            required: false
+          - label: "Datum"
+            name: "datum"
+            widget: "string"
+            default: "TBA"
+            required: false
+          - label: "Broj ekipa"
+            name: "broj_ekipa"
+            widget: "number"
+            value_type: "int"
+            required: false
+          - label: "Status"
+            name: "status"
+            widget: "select"
+            default: "Uskoro"
+            options: ["Uskoro", "Pretkolo u toku", "U toku", "Finale u toku", "Turnir završen"]
+          - label: "Prikaži pobednika"
+            name: "prikazi_pobednika"
+            widget: "boolean"
+            default: false
+            hint: "Uključi tek kad se turnir završi."
+          - label: "Naziv pobedničkog tima"
+            name: "pobednik_naziv"
+            widget: "string"
+            required: false
+          - label: "Slika pobednika"
+            name: "pobednik_slika"
+            widget: "image"
+            required: false
+          - label: "Prikaži sponzore"
+            name: "prikazi_sponzore"
+            widget: "boolean"
+            default: false
+
+  - name: "turnir-utakmice"
+    label: "Turnir — Utakmice"
+    folder: "content/turnir-utakmice"
+    create: true
+    slug: "{{year}}-{{month}}-{{day}}-{{hour}}{{minute}}{{second}}-{{slug}}"
+    identifier_field: "tim1"
+    summary: "{{runda}} — {{tim1}} : {{tim2}}"
+    extension: "json"
+    format: "json"
+    fields:
+      - label: "Runda"
+        name: "runda"
+        widget: "select"
+        default: "Grupna faza"
+        options: ["Grupna faza", "Pretkolo", "1/16 finala", "Osmina finala", "Četvrtfinale", "Polufinale", "Finale"]
+      - label: "Tim 1"
+        name: "tim1"
+        widget: "string"
+      - label: "Tim 2"
+        name: "tim2"
+        widget: "string"
+        required: false
+        hint: "Ostavi prazno ako je Tim 1 slobodan (bye) u ovoj rundi."
+      - label: "Rezultat — Tim 1"
+        name: "rezultat1"
+        widget: "number"
+        value_type: "int"
+        required: false
+      - label: "Rezultat — Tim 2"
+        name: "rezultat2"
+        widget: "number"
+        value_type: "int"
+        required: false
+      - label: "Datum"
+        name: "datum"
+        widget: "string"
+        required: false
+      - label: "Vreme"
+        name: "vreme"
+        widget: "string"
+        required: false
+      - label: "Teren / lokacija"
+        name: "teren"
+        widget: "string"
+        required: false
+
+  - name: "turnir-novosti"
+    label: "Turnir — Novosti"
+    folder: "content/turnir-novosti"
+    create: true
+    slug: "{{year}}-{{month}}-{{day}}-{{hour}}{{minute}}{{second}}-{{slug}}"
+    identifier_field: "naslov"
+    summary: "{{naslov}}"
+    extension: "json"
+    format: "json"
+    fields:
+      - label: "Datum"
+        name: "datum"
+        widget: "string"
+        required: false
+      - label: "Naslov"
+        name: "naslov"
+        widget: "string"
+      - label: "Tekst"
+        name: "tekst"
+        widget: "markdown"
+        buttons: ["bold", "italic", "link", "heading-two", "heading-three", "quote", "bulleted-list", "numbered-list"]
+
+  - name: "turnir-sponzori"
+    label: "Turnir — Sponzori"
+    folder: "content/turnir-sponzori"
+    create: true
+    slug: "{{year}}-{{month}}-{{day}}-{{hour}}{{minute}}{{second}}-{{slug}}"
+    identifier_field: "naziv"
+    summary: "{{naziv}}"
+    extension: "json"
+    format: "json"
+    fields:
+      - label: "Naziv sponzora"
+        name: "naziv"
+        widget: "string"
+      - label: "Logo"
+        name: "logo"
+        widget: "image"
+      - label: "Link"
+        name: "link"
+        widget: "string"
+        required: false
