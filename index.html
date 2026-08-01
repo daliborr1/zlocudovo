@@ -102,20 +102,43 @@
   .section-head .tag{ font-family:var(--font-mono); font-size:0.78rem; color:var(--rust); letter-spacing:0.1em; text-transform:uppercase; }
   .section-head h2{ font-family:var(--font-display); font-weight:600; font-size:1.9rem; margin:0; }
 
-  .about-grid{ display:grid; grid-template-columns:1fr 1fr; gap:56px; align-items:center; }
+  .about-grid{ display:grid; grid-template-columns:1fr 1fr; gap:56px; align-items:stretch; }
   @media (max-width:760px){ .about-grid{grid-template-columns:1fr;} }
   .about-grid p{margin:0 0 16px; max-width:56ch;}
 
-  .video-embed{ position:relative; width:100%; aspect-ratio:16/9; background:var(--walnut); overflow:hidden; border-radius:2px; cursor:pointer; }
+  .about-text{ position:relative; display:flex; flex-direction:column; justify-content:center; background:var(--walnut); padding:36px 40px; border-radius:14px; overflow:hidden; }
+  .about-text::before{
+    content:""; position:absolute; inset:0;
+    background:
+      radial-gradient(circle at 85% 12%, rgba(163,71,46,0.3), transparent 55%),
+      radial-gradient(circle at 8% 92%, rgba(192,138,62,0.2), transparent 50%),
+      repeating-linear-gradient(100deg, rgba(255,255,255,0.025) 0px, rgba(255,255,255,0.025) 2px, transparent 2px, transparent 26px),
+      repeating-linear-gradient(100deg, rgba(0,0,0,0.15) 0px, rgba(0,0,0,0.15) 1px, transparent 1px, transparent 60px);
+    pointer-events:none;
+  }
+  .about-text p{ position:relative; z-index:1; font-weight:500; color:rgba(241,230,205,0.94); }
+  .about-text p:last-child{ margin-bottom:0; }
+  .about-text .quote-mark{ position:relative; z-index:1; display:block; font-family:var(--font-display); font-size:3.4rem; line-height:1; color:var(--rust); margin-bottom:4px; }
+
+  .about-video{ display:flex; flex-direction:column; background:var(--cream-2); border-radius:14px; overflow:hidden; box-shadow:0 10px 26px rgba(43,32,21,0.2); }
+  .video-embed{ position:relative; width:100%; flex:1; min-height:220px; background:var(--walnut); cursor:pointer; }
   .video-embed iframe{ position:absolute; inset:0; width:100%; height:100%; border:none; display:block; }
   .video-thumb{ position:absolute; inset:0; width:100%; height:100%; object-fit:cover; }
   .video-play{ position:absolute; inset:0; display:flex; align-items:center; justify-content:center; font-size:2.2rem; color:var(--cream); background:rgba(43,32,21,0.28); transition:background .2s ease; }
   .video-embed:hover .video-play{ background:rgba(43,32,21,0.4); }
+  .video-caption{ display:flex; align-items:center; gap:12px; flex-shrink:0; padding:14px 20px; font-family:var(--font-mono); font-size:0.72rem; letter-spacing:0.08em; text-transform:uppercase; color:rgba(43,32,21,0.55); }
+  .video-caption::before, .video-caption::after{ content:""; flex:1; height:1px; background:rgba(43,32,21,0.25); }
 
   .about-facts{ display:grid; grid-template-columns:repeat(auto-fit, minmax(180px,1fr)); gap:16px; margin-top:32px; }
   .fact-plank{ background:var(--cream-2); border-left:4px solid var(--moss); padding:16px 20px; font-size:0.92rem; }
   .fact-plank b{display:block; font-family:var(--font-display); font-size:1.1rem; margin-bottom:2px;}
   .fact-plank p{ margin:0 0 10px; }
+
+  .about-facts .fact-plank{ display:flex; align-items:center; gap:16px; border-left-color:var(--fc, var(--moss)); border-radius:8px; }
+  .about-facts .fact-icon{ flex-shrink:0; width:52px; height:52px; border-radius:50%; background:var(--cream); color:var(--fc, var(--rust)); display:flex; align-items:center; justify-content:center; }
+  .about-facts .fact-icon svg{ width:24px; height:24px; }
+  .about-facts .fact-body b{ padding-bottom:6px; margin-bottom:8px; border-bottom:2px solid var(--fc, var(--moss)); }
+  .about-facts .fact-body p{ margin:0; }
 
   .turnir-banner{ display:block; background:var(--walnut); color:var(--cream); text-decoration:none; padding:24px 32px; margin:32px auto; max-width:1080px; border-radius:2px; border-left:4px solid var(--amber); transition:border-color .2s ease; }
   .turnir-banner:hover{ border-left-color:var(--rust); }
@@ -391,17 +414,31 @@
         <img class="video-thumb" src="https://i.ytimg.com/vi/fHsvkAH_sho/hqdefault.jpg" alt="Snimak sela Zloćudovo iz vazduha (dron)" loading="lazy">
         <span class="video-play" aria-hidden="true">▶</span>
       </div>
+      <span class="video-caption">Zloćudovo iz vazduha</span>
     </div>
-    <div>
+    <div class="about-text">
+      <span class="quote-mark" aria-hidden="true">“</span>
       <p>Zloćudovo je naseljeno mesto u sastavu grada Leskovca, smešteno na levoj obali Tulovske reke, neposredno iznad njenog ušća u Južnu Moravu. Taj položaj — između reke i ravnice — oblikovao je selo vekovima: dobra zemlja uz vodu, i blizina glavnog toka koji povezuje jablaničku dolinu sa ostatkom regiona.</p>
       <p>Danas kroz neposrednu blizinu naselja prolazi i auto-put A1 (E75), sa naplatnom stanicom „Leskovac-jug" tik ispod sela — Zloćudovo je tako ostalo mirno selo, ali sa lakim izlazom na glavni pravac ka Nišu i Vranju.</p>
     </div>
   </div>
   <div class="about-facts">
-    <div class="fact-plank"><b>Položaj</b>Leva obala Tulovske reke, blizu ušća u Južnu Moravu.</div>
-    <div class="fact-plank"><b>Uprava</b>Deo grada Leskovca, Jablanički okrug.</div>
-    <div class="fact-plank"><b>Saobraćaj</b>Auto-put A1/E75 i naplatna stanica „Leskovac-jug" tik pored atara.</div>
-    <div class="fact-plank" id="weatherPlank"><b>Trenutno vreme</b><span id="weatherText">Učitavanje…</span></div>
+    <div class="fact-plank" style="--fc:var(--leaf)">
+      <span class="fact-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s7-7.58 7-12.5A7 7 0 0 0 5 8.5C5 13.42 12 21 12 21Z"/><circle cx="12" cy="8.5" r="2.4"/></svg></span>
+      <div class="fact-body"><b>Položaj</b><p>Leva obala Tulovske reke, blizu ušća u Južnu Moravu.</p></div>
+    </div>
+    <div class="fact-plank" style="--fc:var(--river)">
+      <span class="fact-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 10 12 4l8 6"/><path d="M5 10v9M9 10v9M15 10v9M19 10v9"/><path d="M3 19h18"/></svg></span>
+      <div class="fact-body"><b>Uprava</b><p>Deo grada Leskovca, Jablanički okrug.</p></div>
+    </div>
+    <div class="fact-plank" style="--fc:var(--rust)">
+      <span class="fact-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M9 3 5 21"/><path d="M15 3l4 18"/><path d="M12 5v3M12 11v3M12 17v3"/></svg></span>
+      <div class="fact-body"><b>Saobraćaj</b><p>Auto-put A1/E75 i naplatna stanica „Leskovac-jug" tik pored atara.</p></div>
+    </div>
+    <div class="fact-plank" id="weatherPlank" style="--fc:var(--amber)">
+      <span class="fact-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4.2"/><path d="M12 2v2.2M12 19.8V22M4.2 12H2M22 12h-2.2M5.3 5.3l1.5 1.5M17.2 17.2l1.5 1.5M18.7 5.3l-1.5 1.5M6.8 17.2l-1.5 1.5"/></svg></span>
+      <div class="fact-body"><b>Trenutno vreme</b><p id="weatherText">Učitavanje…</p></div>
+    </div>
   </div>
 </section>
 
