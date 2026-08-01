@@ -23,8 +23,10 @@ a{color:inherit;}
 ::selection{background:var(--rust); color:var(--cream);}
 
 header.nav{ position:sticky; top:0; z-index:50; display:flex; align-items:center; justify-content:space-between; padding:16px 32px; background:rgba(241,230,205,0.92); backdrop-filter:blur(6px); border-bottom:1px solid rgba(43,32,21,0.12); }
-.nav-mark{ font-family:var(--font-display); font-weight:600; font-size:1.05rem; }
+.nav-mark{ font-family:var(--font-display); font-weight:700; font-size:1.15rem; letter-spacing:0.01em; }
 .nav-mark span{ color:var(--rust); }
+.nav-mark .nav-sub{ font-family:var(--font-mono); font-weight:400; font-size:0.82rem; color:rgba(43,32,21,0.55); margin-left:6px; }
+@media (max-width:600px){ .nav-mark .nav-sub{ display:none; } }
 .back-link{ font-family:var(--font-mono); font-size:0.85rem; text-decoration:none; border-bottom:1px solid var(--rust); color:var(--rust); padding-bottom:2px; }
 
 .akcija-hero{ background:var(--walnut); color:var(--cream); padding:64px 32px 48px; }

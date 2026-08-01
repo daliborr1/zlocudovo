@@ -12,7 +12,7 @@
 <body>
 
 <header class="nav">
-  <div class="nav-mark">Zloćudovo</div>
+  <div class="nav-mark">Zloćudovo <span class="nav-sub" id="navSub"></span></div>
   <a class="back-link" href="../index.html#akcije">← Nazad na akcije</a>
 </header>
 
@@ -52,6 +52,9 @@
       return;
     }
     document.title = item.naslov + ' (' + item.godina + ') — Zloćudovo';
+
+    var navSub = document.getElementById('navSub');
+    if(navSub) navSub.textContent = '/ ' + item.naslov;
 
     el.innerHTML = Z.renderAkcijaHtml(item, { slideshowId: 'akcijaSlideshow' });
 
