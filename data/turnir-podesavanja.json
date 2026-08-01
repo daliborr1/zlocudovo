@@ -1,14 +1,14 @@
 {
+  "broj_ekipa": 21,
+  "prikazi_pobednika": true,
+  "pobednik_naziv": "Stara garda",
   "aktivan": true,
-  "naziv": "Turnir u košarci",
-  "opis": "",
-  "sport": "Košarka",
-  "format": "Kup sistem",
+  "opis": "Sledeci turnir u kosarci 2026",
   "datum": "TBA",
-  "broj_ekipa": 0,
   "status": "Uskoro",
-  "prikazi_pobednika": false,
-  "pobednik_naziv": "",
-  "pobednik_slika": "",
-  "prikazi_sponzore": false
+  "naziv": "Turnir u košarci",
+  "sport": "Košarka",
+  "pobednik_slika": "/images/uploads/1e.jpg",
+  "prikazi_sponzore": true,
+  "format": "Kup sistem"
 }
