@@ -8,6 +8,7 @@
   "status": "Uskoro",
   "naziv": "Turnir u košarci",
   "sport": "Košarka",
+  "pobednik_cestitka": "Cestitamo pobednicima turnira !",
   "pobednik_slika": "/images/uploads/1e.jpg",
   "prikazi_sponzore": true,
   "format": "Kup sistem"
