@@ -102,10 +102,18 @@
   .section-head .tag{ font-family:var(--font-mono); font-size:0.78rem; color:var(--rust); letter-spacing:0.1em; text-transform:uppercase; }
   .section-head h2{ font-family:var(--font-display); font-weight:600; font-size:1.9rem; margin:0; }
 
-  .about-grid{ display:grid; grid-template-columns:1.2fr 1fr; gap:56px; }
+  .about-grid{ display:grid; grid-template-columns:1fr 1fr; gap:56px; align-items:center; }
   @media (max-width:760px){ .about-grid{grid-template-columns:1fr;} }
   .about-grid p{margin:0 0 16px; max-width:56ch;}
-  .fact-plank{ background:var(--cream-2); border-left:4px solid var(--moss); padding:16px 20px; margin-bottom:14px; font-size:0.92rem; }
+
+  .video-embed{ position:relative; width:100%; aspect-ratio:16/9; background:var(--walnut); overflow:hidden; border-radius:2px; cursor:pointer; }
+  .video-embed iframe{ position:absolute; inset:0; width:100%; height:100%; border:none; display:block; }
+  .video-thumb{ position:absolute; inset:0; width:100%; height:100%; object-fit:cover; }
+  .video-play{ position:absolute; inset:0; display:flex; align-items:center; justify-content:center; font-size:2.2rem; color:var(--cream); background:rgba(43,32,21,0.28); transition:background .2s ease; }
+  .video-embed:hover .video-play{ background:rgba(43,32,21,0.4); }
+
+  .about-facts{ display:grid; grid-template-columns:repeat(auto-fit, minmax(180px,1fr)); gap:16px; margin-top:32px; }
+  .fact-plank{ background:var(--cream-2); border-left:4px solid var(--moss); padding:16px 20px; font-size:0.92rem; }
   .fact-plank b{display:block; font-family:var(--font-display); font-size:1.1rem; margin-bottom:2px;}
   .fact-plank p{ margin:0 0 10px; }
 
@@ -378,16 +386,22 @@
 <section id="o-selu">
   <div class="section-head"><span class="tag" style="color:var(--rust)">01</span><h2>O selu</h2></div>
   <div class="about-grid">
+    <div class="about-video">
+      <div class="video-embed" id="oSeluVideo" data-video-id="fHsvkAH_sho">
+        <img class="video-thumb" src="https://i.ytimg.com/vi/fHsvkAH_sho/hqdefault.jpg" alt="Snimak sela Zloćudovo iz vazduha (dron)" loading="lazy">
+        <span class="video-play" aria-hidden="true">▶</span>
+      </div>
+    </div>
     <div>
       <p>Zloćudovo je naseljeno mesto u sastavu grada Leskovca, smešteno na levoj obali Tulovske reke, neposredno iznad njenog ušća u Južnu Moravu. Taj položaj — između reke i ravnice — oblikovao je selo vekovima: dobra zemlja uz vodu, i blizina glavnog toka koji povezuje jablaničku dolinu sa ostatkom regiona.</p>
       <p>Danas kroz neposrednu blizinu naselja prolazi i auto-put A1 (E75), sa naplatnom stanicom „Leskovac-jug" tik ispod sela — Zloćudovo je tako ostalo mirno selo, ali sa lakim izlazom na glavni pravac ka Nišu i Vranju.</p>
     </div>
-    <div>
-      <div class="fact-plank"><b>Položaj</b>Leva obala Tulovske reke, blizu ušća u Južnu Moravu.</div>
-      <div class="fact-plank"><b>Uprava</b>Deo grada Leskovca, Jablanički okrug.</div>
-      <div class="fact-plank"><b>Saobraćaj</b>Auto-put A1/E75 i naplatna stanica „Leskovac-jug" tik pored atara.</div>
-      <div class="fact-plank" id="weatherPlank"><b>Trenutno vreme</b><span id="weatherText">Učitavanje…</span></div>
-    </div>
+  </div>
+  <div class="about-facts">
+    <div class="fact-plank"><b>Položaj</b>Leva obala Tulovske reke, blizu ušća u Južnu Moravu.</div>
+    <div class="fact-plank"><b>Uprava</b>Deo grada Leskovca, Jablanički okrug.</div>
+    <div class="fact-plank"><b>Saobraćaj</b>Auto-put A1/E75 i naplatna stanica „Leskovac-jug" tik pored atara.</div>
+    <div class="fact-plank" id="weatherPlank"><b>Trenutno vreme</b><span id="weatherText">Učitavanje…</span></div>
   </div>
 </section>
 
@@ -848,6 +862,44 @@ window.initSlideshow = function(wrap){
     });
   }, { threshold: 0.4 });
   observer.observe(row);
+})();
+</script>
+
+<script>
+(function(){
+  var wrap = document.getElementById('oSeluVideo');
+  if(!wrap) return;
+  var videoId = wrap.getAttribute('data-video-id');
+  if(!videoId) return;
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var loaded = false;
+
+  function loadVideo(autoplay){
+    if(loaded) return;
+    loaded = true;
+    var params = 'mute=1&playsinline=1&rel=0&modestbranding=1' + (autoplay ? '&autoplay=1' : '');
+    var iframe = document.createElement('iframe');
+    iframe.src = 'https://www.youtube-nocookie.com/embed/' + videoId + '?' + params;
+    iframe.title = 'Snimak sela Zloćudovo iz vazduha';
+    iframe.setAttribute('allow', 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture');
+    iframe.setAttribute('allowfullscreen', '');
+    wrap.innerHTML = '';
+    wrap.appendChild(iframe);
+  }
+
+  wrap.addEventListener('click', function(){ loadVideo(true); });
+
+  if('IntersectionObserver' in window){
+    var observer = new IntersectionObserver(function(entries){
+      entries.forEach(function(entry){
+        if(entry.isIntersecting){
+          loadVideo(!reduce);
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.5 });
+    observer.observe(wrap);
+  }
 })();
 </script>
 
