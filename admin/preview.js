@@ -62,6 +62,7 @@
             'Status: ' + esc(s.status || '') + ' · Sport: ' + esc(s.sport || '') + ' · Format: ' + esc(s.format || '') + ' · Datum: ' + esc(s.datum || '') + ' · Ekipa: ' + esc(s.broj_ekipa || '') +
           '</p>' +
           (s.prikazi_pobednika ? '<p><b>Pobednik:</b> ' + esc(s.pobednik_naziv || '(još nije upisan)') + '</p>' : '') +
+          (s.prikazi_pobednika && s.pobednik_cestitka ? (Z ? Z.renderMarkdown(s.pobednik_cestitka) : '') : '') +
         '</div>';
       return h('div', { className: 'preview-wrap', dangerouslySetInnerHTML: { __html: html } });
     }

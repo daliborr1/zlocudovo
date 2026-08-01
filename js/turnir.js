@@ -143,7 +143,11 @@
         '<div class="section-head"><span class="tag">' + tag() + '</span><h2>Objava pobednika</h2></div>' +
         '<div class="t-winner">' +
           (s.pobednik_slika ? '<img src="' + esc(s.pobednik_slika) + '" alt="' + esc(s.pobednik_naziv || '') + '">' : '') +
-          '<div><div class="lbl">Pobednik turnira</div><div class="name">' + esc(s.pobednik_naziv || 'Biće objavljeno') + '</div></div>' +
+          '<div>' +
+            '<div class="lbl">Pobednik turnira</div>' +
+            '<div class="name">' + esc(s.pobednik_naziv || 'Biće objavljeno') + '</div>' +
+            (s.pobednik_cestitka ? '<div class="cestitka">' + (Z ? Z.renderMarkdown(s.pobednik_cestitka) : esc(s.pobednik_cestitka)) + '</div>' : '') +
+          '</div>' +
         '</div>' +
       '</section>';
     }

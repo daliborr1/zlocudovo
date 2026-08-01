@@ -278,6 +278,13 @@ collections:
             name: "pobednik_slika"
             widget: "image"
             required: false
+          - label: "Čestitka"
+            name: "pobednik_cestitka"
+            widget: "markdown"
+            required: false
+            hint: "Kratka čestitka ili poruka pobedničkom timu (opciono)."
+            buttons: ["bold", "italic", "link"]
+            modes: ["rich_text"]
           - label: "Prikaži sponzore"
             name: "prikazi_sponzore"
             widget: "boolean"
