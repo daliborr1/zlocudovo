@@ -197,8 +197,10 @@ collections:
         hint: "Npr. Seoska slava, Vašar, Sabor..."
       - label: "Datum"
         name: "datum"
-        widget: "date"
+        widget: "datetime"
         format: "YYYY-MM-DD"
+        time_format: false
+        picker_utc: true
         hint: "Datum za konkretnu godinu — pred narednu godinu treba dodati nov unos sa novim datumom (npr. za pokretne datume vašara/sabora)."
 
   - name: "familija-galerija"
