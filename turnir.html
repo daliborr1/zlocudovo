@@ -32,9 +32,10 @@
   header.nav .brand{ display:flex; align-items:baseline; gap:10px; flex-wrap:wrap; }
   header.nav .brand a{ font-family:var(--font-display); font-weight:700; font-size:1.15rem; text-decoration:none; color:var(--cream); }
   header.nav .brand span{ color:rgba(241,230,205,0.6); font-family:var(--font-mono); font-size:0.85rem; }
-  header.nav nav{ display:flex; gap:20px; flex-wrap:wrap; font-size:0.85rem; font-family:var(--font-mono); }
-  header.nav nav a{ text-decoration:none; color:rgba(241,230,205,0.85); }
-  header.nav nav a:hover{ color:var(--amber); }
+  header.nav nav{ display:flex; gap:8px; flex-wrap:wrap; font-size:0.85rem; font-family:var(--font-mono); }
+  header.nav nav a{ text-decoration:none; color:rgba(241,230,205,0.85); padding:6px 10px; border-radius:999px; transition:color .2s, background-color .25s ease, transform .25s ease; }
+  header.nav nav a:hover, header.nav nav a:focus-visible{ color:var(--amber); background:rgba(241,230,205,0.12); transform:scale(1.08); outline:none; }
+  header.nav nav a.active{ color:var(--amber); background:rgba(241,230,205,0.12); transform:scale(1.08); }
 
   .nav-toggle{ display:none; background:none; border:none; cursor:pointer; padding:8px; flex-direction:column; gap:5px; }
   .nav-toggle span{ display:block; width:22px; height:2px; background:var(--cream); border-radius:1px; }
@@ -185,6 +186,37 @@
       toggle.setAttribute('aria-expanded', 'false');
     });
   });
+})();
+
+(function(){
+  var observer;
+
+  function setup(){
+    var navLinks = Array.prototype.slice.call(document.querySelectorAll('#turnirNavLinks a'));
+    var map = navLinks.map(function(a){
+      var sec = document.querySelector(a.getAttribute('href'));
+      return { link: a, section: sec };
+    }).filter(function(m){ return m.section; });
+
+    if(!map.length || !('IntersectionObserver' in window)) return;
+
+    if(observer) observer.disconnect();
+    observer = new IntersectionObserver(function(entries){
+      entries.forEach(function(entry){
+        var match = map.find(function(m){ return m.section === entry.target; });
+        if(!match) return;
+        if(entry.isIntersecting){
+          navLinks.forEach(function(a){ a.classList.remove('active'); });
+          match.link.classList.add('active');
+        }
+      });
+    }, { rootMargin: '-40% 0px -55% 0px', threshold: 0 });
+
+    map.forEach(function(m){ observer.observe(m.section); });
+  }
+
+  setup();
+  document.addEventListener('turnir:rendered', setup);
 })();
 </script>
 </body>

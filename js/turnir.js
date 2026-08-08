@@ -201,5 +201,6 @@
 
     var contentEl = document.getElementById('turnirContent');
     if(contentEl) contentEl.innerHTML = html;
+    document.dispatchEvent(new CustomEvent('turnir:rendered'));
   });
 })();
