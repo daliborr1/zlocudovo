@@ -181,6 +181,26 @@ collections:
             modes: ["rich_text"]
 
 
+  - name: "kalendar"
+    label: "Kalendar sela"
+    folder: "content/kalendar"
+    create: true
+    slug: "{{datum}}-{{slug}}"
+    identifier_field: "naziv"
+    summary: "{{datum}} — {{naziv}}"
+    extension: "json"
+    format: "json"
+    fields:
+      - label: "Naziv"
+        name: "naziv"
+        widget: "string"
+        hint: "Npr. Seoska slava, Vašar, Sabor..."
+      - label: "Datum"
+        name: "datum"
+        widget: "date"
+        format: "YYYY-MM-DD"
+        hint: "Datum za konkretnu godinu — pred narednu godinu treba dodati nov unos sa novim datumom (npr. za pokretne datume vašara/sabora)."
+
   - name: "familija-galerija"
     label: "Familija — Galerija"
     folder: "content/familija-galerija"

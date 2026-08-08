@@ -200,6 +200,27 @@
   .familija-activities li{ font-size:0.92rem; padding-left:22px; position:relative; }
   .familija-activities li::before{ content:"·"; position:absolute; left:0; top:-2px; color:var(--rust); font-size:1.6rem; line-height:1; }
 
+  /* ---------- NAJAVE + KALENDAR ---------- */
+  .najave-grid{ display:grid; grid-template-columns:1.1fr 0.9fr; gap:32px; align-items:start; margin-top:28px; }
+  @media (max-width:760px){ .najave-grid{ grid-template-columns:1fr; } }
+
+  .kalendar-card{ background:var(--cream-2); border-radius:14px; padding:22px 24px; border-top:3px solid var(--river); }
+  .kalendar-head{ display:grid; grid-template-columns:28px 1fr 28px; align-items:center; gap:8px; margin-bottom:14px; }
+  .kalendar-title{ font-family:var(--font-display); font-weight:600; font-size:1.05rem; text-align:center; text-transform:capitalize; }
+  .kalendar-head button{ width:28px; height:28px; border-radius:50%; border:1px solid rgba(43,32,21,0.2); background:var(--cream); cursor:pointer; font-family:var(--font-mono); font-size:0.9rem; color:var(--ink); transition:background-color .2s ease, transform .2s ease; }
+  .kalendar-head button:hover, .kalendar-head button:focus-visible{ background:var(--river); color:var(--cream); transform:scale(1.1); outline:none; }
+  .kalendar-weekdays{ display:grid; grid-template-columns:repeat(7,1fr); text-align:center; font-family:var(--font-mono); font-size:0.66rem; color:rgba(34,25,19,0.55); margin-bottom:6px; }
+  .kalendar-days{ display:grid; grid-template-columns:repeat(7,1fr); gap:4px; }
+  .kalendar-day{ aspect-ratio:1; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:2px; font-size:0.8rem; border-radius:8px; color:var(--ink); }
+  .kalendar-day.is-empty{ visibility:hidden; }
+  .kalendar-day.is-today{ background:var(--walnut); color:var(--cream); font-weight:700; }
+  .kalendar-day .dot{ width:5px; height:5px; border-radius:50%; background:var(--rust); }
+  .kalendar-day.is-today .dot{ background:var(--amber); }
+  .kalendar-events{ margin-top:16px; padding-top:14px; border-top:1px solid rgba(43,32,21,0.15); display:grid; gap:8px; }
+  .kalendar-event{ font-size:0.85rem; display:flex; gap:8px; }
+  .kalendar-event .d{ font-family:var(--font-mono); font-size:0.78rem; color:var(--river); flex-shrink:0; }
+  .kalendar-empty{ font-family:var(--font-mono); font-size:0.8rem; color:rgba(34,25,19,0.5); }
+
   /* ---------- AKCIJE / TIMELINE + SLIDESHOW ---------- */
   .akcije-grid{ display:grid; grid-template-columns:0.9fr 1.1fr; gap:80px; align-items:start; }
   @media (max-width:860px){ .akcije-grid{grid-template-columns:1fr; gap:52px;} }
@@ -567,9 +588,23 @@
 
 <section id="najave">
   <div class="section-head"><span class="tag" style="color:var(--river)">05</span><h2>Najave</h2></div>
-  <div class="fact-plank najava-plank" id="najavaPlank" style="border-left-color:var(--river)">
-    <b>Sledeća akcija</b>
-    <span>Datum i detalji sledećeg humanitarnog turnira ili akcije pošumljavanja biće objavljeni ovde čim se potvrde. Za najsvežije vesti pratite <a href="https://www.instagram.com/zlocudovo/" target="_blank" rel="noopener" style="color:var(--river); border-bottom:1px solid var(--river);">Instagram @zlocudovo</a>.</span>
+  <div class="najave-grid">
+    <div class="fact-plank najava-plank" id="najavaPlank" style="border-left-color:var(--river)">
+      <b>Sledeća akcija</b>
+      <span>Datum i detalji sledećeg humanitarnog turnira ili akcije pošumljavanja biće objavljeni ovde čim se potvrde. Za najsvežije vesti pratite <a href="https://www.instagram.com/zlocudovo/" target="_blank" rel="noopener" style="color:var(--river); border-bottom:1px solid var(--river);">Instagram @zlocudovo</a>.</span>
+    </div>
+    <div class="kalendar-card">
+      <div class="kalendar-head">
+        <button type="button" id="kalendarPrev" aria-label="Prethodni mesec">‹</button>
+        <span class="kalendar-title" id="kalendarTitle"></span>
+        <button type="button" id="kalendarNext" aria-label="Sledeći mesec">›</button>
+      </div>
+      <div class="kalendar-weekdays">
+        <span>Pon</span><span>Uto</span><span>Sre</span><span>Čet</span><span>Pet</span><span>Sub</span><span>Ned</span>
+      </div>
+      <div class="kalendar-days" id="kalendarDays"></div>
+      <div class="kalendar-events" id="kalendarEvents"></div>
+    </div>
   </div>
 </section>
 
@@ -1029,6 +1064,108 @@ window.initSlideshow = function(wrap){
     if(!active) return;
     plank.innerHTML = Z.renderNajavaHtml(active);
   });
+})();
+</script>
+
+<script>
+(function(){
+  var daysEl = document.getElementById('kalendarDays');
+  var titleEl = document.getElementById('kalendarTitle');
+  var eventsEl = document.getElementById('kalendarEvents');
+  var prevBtn = document.getElementById('kalendarPrev');
+  var nextBtn = document.getElementById('kalendarNext');
+  if(!daysEl || !titleEl || !eventsEl || !prevBtn || !nextBtn) return;
+
+  var FIKSNI_PRAZNICI = [
+    { mesec:1, dan:1, naziv:'Nova godina' },
+    { mesec:1, dan:2, naziv:'Nova godina' },
+    { mesec:1, dan:7, naziv:'Božić' },
+    { mesec:2, dan:15, naziv:'Sretenje — Dan državnosti Srbije' },
+    { mesec:5, dan:1, naziv:'Praznik rada' },
+    { mesec:5, dan:2, naziv:'Praznik rada' },
+    { mesec:11, dan:11, naziv:'Dan primirja u Prvom svetskom ratu' }
+  ];
+
+  var MESECI_NOM = ['januar','februar','mart','april','maj','jun','jul','avgust','septembar','oktobar','novembar','decembar'];
+  var MESECI_GEN = ['januara','februara','marta','aprila','maja','juna','jula','avgusta','septembra','oktobra','novembra','decembra'];
+
+  function pad2(n){ return n < 10 ? '0' + n : '' + n; }
+
+  var today = new Date();
+  var todayIso = today.getFullYear() + '-' + pad2(today.getMonth() + 1) + '-' + pad2(today.getDate());
+  var viewYear = today.getFullYear();
+  var viewMonth = today.getMonth(); // 0-based
+
+  var cmsItems = [];
+
+  function eventsForDate(year, month1based, day){
+    var out = [];
+    FIKSNI_PRAZNICI.forEach(function(p){
+      if(p.mesec === month1based && p.dan === day) out.push({ naziv: p.naziv, dan: day });
+    });
+    var iso = year + '-' + pad2(month1based) + '-' + pad2(day);
+    cmsItems.forEach(function(it){
+      if(it && it.datum === iso) out.push({ naziv: it.naziv, dan: day });
+    });
+    return out;
+  }
+
+  function render(){
+    var month1based = viewMonth + 1;
+    titleEl.textContent = MESECI_NOM[viewMonth] + ' ' + viewYear + '.';
+
+    var firstOfMonth = new Date(viewYear, viewMonth, 1);
+    var jsWeekday = firstOfMonth.getDay(); // 0=Ned..6=Sub
+    var leadEmpty = (jsWeekday + 6) % 7; // Pon-based offset
+    var daysInMonth = new Date(viewYear, viewMonth + 1, 0).getDate();
+
+    var monthEvents = [];
+    var html = '';
+    for(var i = 0; i < leadEmpty; i++){
+      html += '<div class="kalendar-day is-empty"></div>';
+    }
+    for(var d = 1; d <= daysInMonth; d++){
+      var iso = viewYear + '-' + pad2(month1based) + '-' + pad2(d);
+      var evs = eventsForDate(viewYear, month1based, d);
+      if(evs.length) monthEvents = monthEvents.concat(evs);
+      var cls = 'kalendar-day' + (iso === todayIso ? ' is-today' : '');
+      html += '<div class="' + cls + '">' + d + (evs.length ? '<span class="dot"></span>' : '') + '</div>';
+    }
+    var trailEmpty = (7 - ((leadEmpty + daysInMonth) % 7)) % 7;
+    for(var j = 0; j < trailEmpty; j++){
+      html += '<div class="kalendar-day is-empty"></div>';
+    }
+    daysEl.innerHTML = html;
+
+    if(monthEvents.length){
+      eventsEl.innerHTML = monthEvents.map(function(ev){
+        return '<div class="kalendar-event"><span class="d">' + ev.dan + '. ' + MESECI_GEN[viewMonth] + '</span><span>' + ev.naziv + '</span></div>';
+      }).join('');
+    } else {
+      eventsEl.innerHTML = '<div class="kalendar-empty">Nema unetih događaja ovog meseca.</div>';
+    }
+  }
+
+  prevBtn.addEventListener('click', function(){
+    viewMonth--;
+    if(viewMonth < 0){ viewMonth = 11; viewYear--; }
+    render();
+  });
+  nextBtn.addEventListener('click', function(){
+    viewMonth++;
+    if(viewMonth > 11){ viewMonth = 0; viewYear++; }
+    render();
+  });
+
+  render();
+
+  fetch('/data/kalendar.json', { cache: 'no-store' })
+    .then(function(r){ return r.ok ? r.json() : { items: [] }; })
+    .then(function(data){
+      cmsItems = (data && data.items) || [];
+      render();
+    })
+    .catch(function(){});
 })();
 </script>
 

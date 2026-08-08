@@ -29,6 +29,7 @@ module.exports = {
     const root = process.cwd();
     writeIndex(root, 'akcije', 'akcije.json', 'akcije');
     writeIndex(root, 'najave', 'najave.json', 'najave');
+    writeIndex(root, 'kalendar', 'kalendar.json', 'items');
     writeIndex(root, 'familija-galerija', 'familija-galerija.json', 'items');
     writeIndex(root, 'akcije-galerija', 'akcije-galerija.json', 'items');
     writeIndex(root, 'turnir-utakmice', 'turnir-utakmice.json', 'items');
